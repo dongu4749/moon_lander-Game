@@ -28,16 +28,16 @@ public class PlayerRocket extends JFrame{
     /**
      * X coordinate of the rocket.
      */
-    public int x;
+    private int x;
     /**
      * Y coordinate of the rocket.
      */
-    public int y;
+    private int y;
     
     /**
      * Is rocket landed?
      */
-    public static boolean landed;
+    public boolean landed;
     
     private StageBase stageBase;
     /**
@@ -48,25 +48,25 @@ public class PlayerRocket extends JFrame{
     /**
      * 로켓의 가속 속도.
      */
-    public static int speedAccelerating;
+    private int speedAccelerating;
     /**
      * 로켓의 정지/하강 속도. 속도가 떨어지는 이유는 중력이 로켓을 달로 끌어내리기 때문이다.
      */
-    public static double speedStopping;
+    private double speedStopping;
     
     /**
      * 착륙 시 충돌 없이 로켓이 가질 수 있는 최대 속도입니다.
      */
-    public int topLandingSpeed;
+    private int topLandingSpeed;
     
     /**
      * x좌표상에서 로켓은 얼마나 빠르고 어느 방향으로 움직이는가?
      */
-    public static int speedX;
+    private int speedX;
     /**
      * y좌표상에서 로켓은 얼마나 빠르고 어느 방향으로 움직이는가?
      */
-    public static int speedY;
+    private int speedY;
             
     /**
      * Image of the rocket in air.
@@ -94,8 +94,29 @@ public class PlayerRocket extends JFrame{
      * Height of rocket.
      */
     public int rocketImgHeight;
+    public int getCoordinateX() {
+    	return x;
+    }
     
+    public int getCoordinateY() {
+    	return y;
+    }
     
+    public void setSpeedStopping(double speedStopping) {
+    	this.speedStopping=speedStopping;
+    }
+    
+    public int getSpeedX() {
+    	return speedX;
+    }
+    
+    public int getSpeedY() {
+    	return speedY;
+    }
+    
+    public int getTopLandingSpeed() {
+    	return topLandingSpeed;
+    }
     public PlayerRocket()
     {
         Initialize();
@@ -235,11 +256,11 @@ public class PlayerRocket extends JFrame{
     	
       	if(pause == true )
       	{
-      		p1speedX=PlayerRocket.speedX;
-      		p1speedY=PlayerRocket.speedY;
+      		p1speedX=speedX;
+      		p1speedY=speedY;
             
-      		p2speedX=PlayerEnemy.speedX;
-      		p2speedY=PlayerEnemy.speedY;
+      		p2speedX=Game.playerEnemy.getSpeedX();
+      		p2speedY=Game.playerEnemy.getSpeedY();
             
             
       	}
@@ -247,16 +268,16 @@ public class PlayerRocket extends JFrame{
     public void Gamepause()
     {
     	
-    	PlayerRocket.speedX=0;
-        PlayerRocket.speedY=0;
-        PlayerEnemy.speedX=0;
-        PlayerEnemy.speedY=0;
+    	speedX=0;
+        speedY=0;
+        Game.playerEnemy.setSpeedX(0);
+        Game.playerEnemy.setSpeedY(0);
         MovingObstacle.speedX3=0;
         MovingObstacle.speedX4=0;
         MovingObstacle2.speedX1=0;
         MovingObstacle2.speedX2=0; 
-        PlayerRocket.speedStopping=0;
-        PlayerEnemy.speedStopping=0;
+        speedStopping=0;
+        Game.playerEnemy.setSpeedStopping(0);
     }	
     
     public void Gamerestart()
@@ -265,14 +286,14 @@ public class PlayerRocket extends JFrame{
         MovingObstacle.speedX4=6;
     	MovingObstacle2.speedX1=7;
         MovingObstacle2.speedX2=6;
-        PlayerRocket.speedX=p1speedX;
-        PlayerRocket.speedY=p1speedY;
-        PlayerRocket.speedStopping=1;
-        PlayerEnemy.speedX=p2speedX;
-        PlayerEnemy.speedY=p2speedY;
-        PlayerEnemy.speedStopping=1;
+        speedX=p1speedX;
+        speedY=p1speedY;
+        speedStopping=1;
+        Game.playerEnemy.setSpeedX(p2speedX);
+        Game.playerEnemy.setSpeedY(p2speedY);
+        Game.playerEnemy.setSpeedStopping(1);
     }
-    public void Draw(Graphics2D g2d)
+    public void PlayerDraw(Graphics2D g2d)
     {
         g2d.setColor(Color.white);
         g2d.drawString("Rocket coordinates: " + x + " : " + y, 5, 15);

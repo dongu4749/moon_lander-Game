@@ -37,7 +37,7 @@ public abstract class StageBase {
         Game.obstacle2.Draw(g2d);
         Game.movingobstacle.Draw(g2d);
         Game.movingobstacle2.Draw(g2d);
-        Game.playerRocket.Draw(g2d);
+        Game.playerRocket.PlayerDraw(g2d);
     }
 	
 	public static void DrawGameOver(Graphics2D g2d, Point mousePosition, long gameTime,long PauseTime)

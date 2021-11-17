@@ -28,22 +28,22 @@ public class PlayerEnemy extends JFrame{
     /**
      * X coordinate of the rocket.
      */
-    public int x;
+    private int x;
     /**
      * Y coordinate of the rocket.
      */
-    public int y;
+    private int y;
     
     /**
      * Is rocket landed?
      */
-    public static boolean landed;
+    
     
     
     /**
      * Has rocket crashed?
      */
-    public boolean crashed;
+    
         
     /**
      * 로켓의 가속 속도.
@@ -52,21 +52,21 @@ public class PlayerEnemy extends JFrame{
     /**
      * 로켓의 정지/하강 속도. 속도가 떨어지는 이유는 중력이 로켓을 달로 끌어내리기 때문이다.
      */
-    public static double speedStopping;
+    private double speedStopping;
     
     /**
      * 착륙 시 충돌 없이 로켓이 가질 수 있는 최대 속도입니다.
      */
-    public int topLandingSpeed;
+    
     
     /**
      * x좌표상에서 로켓은 얼마나 빠르고 어느 방향으로 움직이는가?
      */
-    public static int speedX;
+    private int speedX;
     /**
      * y좌표상에서 로켓은 얼마나 빠르고 어느 방향으로 움직이는가?
      */
-    public static int speedY;
+    private int speedY;
             
     /**
      * Image of the rocket in air.
@@ -96,7 +96,33 @@ public class PlayerEnemy extends JFrame{
      */
     public int enemyImgHeight;
     
+    public void setSpeedX(int speedX) {
+    	this.speedX=speedX;
+    }
     
+    public int getSpeedX() {
+    	return speedX;
+    }
+    
+    public void setSpeedY(int speedY) {
+    	this.speedY=speedY;
+    }
+    
+    public int getSpeedY() {
+    	return speedY;
+    }
+    
+    public int getCoordinateX() {
+    	return x;
+    }
+    
+    public int getCoordinateY() {
+    	return y;
+    }
+    
+    public void setSpeedStopping(double speedStopping) {
+    	this.speedStopping=speedStopping;
+    }
     public PlayerEnemy()
     {
         Initialize();
@@ -120,7 +146,6 @@ public class PlayerEnemy extends JFrame{
         
        
        
-        topLandingSpeed = 5;
     }
     
     private void LoadContent()

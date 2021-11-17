@@ -66,7 +66,7 @@ public class Framework extends Canvas {
      */
     public static int frameHeight;
     private Audio backgroundMusic;
-    private PlayerRocket playerrocket;
+   
     /**
      * Time of one second in nanoseconds.
      * 1 second = 1 000 000 000 nanoseconds
@@ -444,14 +444,14 @@ public class Framework extends Canvas {
             {
                 case PLAYING:
                     
-                    if(PlayerRocket.pause == false)
+                    if(game.playerRocket.pause == false)
                     {
                      gameTime += System.nanoTime() - lastTime;
                      game.UpdateGame(gameTime, mousePosition());
                     
                      lastTime = System.nanoTime();
                     }
-                    else if(PlayerRocket.pause == true)
+                    else if(game.playerRocket.pause == true)
                     {
                     PauseTime += System.nanoTime() - lastTime;
                     game.UpdateGame(gameTime, mousePosition());
@@ -478,11 +478,11 @@ public class Framework extends Canvas {
                 break;
                 case GAMEOVER:
                 	gotoMain.setVisible(true);
-                	if(PlayerRocket.landed==false)
+                	if(game.playerRocket.landed==false)
                 	 Restart.setVisible(true);
                 	 if(StageBase.stage_count==6)
                 	 {
-                		 if(PlayerRocket.landed==true)
+                		 if(game.playerRocket.landed==true)
                 		 {
                 			 Restart.setVisible(false);
                 		 }
@@ -490,7 +490,7 @@ public class Framework extends Canvas {
                 	 Music_start_button.setVisible(true);
                      Music_stop_button.setVisible(true);
                      num++;
-                 	if(num == 1 && PlayerRocket.landed == true) {
+                 	if(num == 1 && game.playerRocket.landed == true) {
                  		Player.Save_Score(StageBase.stage_count, StageBase.Score); 
                  		StageBase.stage_count++;
                  		// 5레벨에서 깨도 한번 ++되어서 ==6으로 바꿈.
@@ -666,27 +666,27 @@ public class Framework extends Canvas {
         {
             case PLAYING:
             	if(StageBase.stage_count==2) {
-            		playerrocket.speedStopping= 1.2;
+            		game.playerRocket.setSpeedStopping(1.2);
     				Stage2 stage2 = new Stage2();
     				stage2.BackgroundImage();
             	}
             	else if(StageBase.stage_count==3) {
-            		playerrocket.speedStopping= 1.4;
+            		game.playerRocket.setSpeedStopping(1.4);
             		Stage3 stage3 = new Stage3();
     				stage3.BackgroundImage();
             	}
             	else if(StageBase.stage_count==4) {
-            		playerrocket.speedStopping= 1.6;
+            		game.playerRocket.setSpeedStopping(1.6);
             		Stage4 stage4 = new Stage4();
     				stage4.BackgroundImage();
             	}
             	else if(StageBase.stage_count==5) {
-            		playerrocket.speedStopping= 1.8;
+            		game.playerRocket.setSpeedStopping(1.8);
             		Stage5 stage5 = new Stage5();
     				stage5.BackgroundImage();
             	}
             	else if(StageBase.stage_count==99) {
-            		playerrocket.speedStopping= 7;
+            		game.playerRocket.setSpeedStopping(7);
             		Stage6 stage6 = new Stage6();
     				stage6.BackgroundImage();
             	}
@@ -854,7 +854,7 @@ public class Framework extends Canvas {
                 
             break;
             case GAMEOVER:  
-                if(PlayerRocket.landed==true && StageBase.stage_count!=6) {
+                if(game.playerRocket.landed==true && StageBase.stage_count!=6) {
                     if(e.getKeyCode() == KeyEvent.VK_SPACE)
                     {	
                     	restartGame();
