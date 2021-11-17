@@ -23,7 +23,7 @@ public abstract class StageBase {
 	
 	public static int Score = 15;
 	
-	
+	private int Stagelevel=1;
 	public static void Draw(Graphics2D g2d, Point mousePosition)
     {
         g2d.drawImage(backgroundImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);

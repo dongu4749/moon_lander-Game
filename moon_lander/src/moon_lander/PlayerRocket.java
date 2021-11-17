@@ -24,7 +24,7 @@ public class PlayerRocket extends JFrame{
      * We use this to generate a random number for starting x coordinate of the rocket.
      */
     private Random random;
- 
+    public int hp = 100;
     /**
      * X coordinate of the rocket.
      */
@@ -39,7 +39,7 @@ public class PlayerRocket extends JFrame{
      */
     public static boolean landed;
     
-    
+    private StageBase stageBase;
     /**
      * Has rocket crashed?
      */
@@ -116,9 +116,6 @@ public class PlayerRocket extends JFrame{
        
         speedAccelerating = 2;
         
-        
-       
-       
         topLandingSpeed = 5;
     }
     
@@ -152,6 +149,7 @@ public class PlayerRocket extends JFrame{
      */
     public void ResetPlayer()
     {
+    	hp=100;
         landed = false;
         crashed = false;
         
@@ -279,19 +277,23 @@ public class PlayerRocket extends JFrame{
         g2d.setColor(Color.white);
         g2d.drawString("Rocket coordinates: " + x + " : " + y, 5, 15);
         g2d.drawString("1P-Rocket", x+2, y-7);
-        if(StageBase.stage_count==1)
+        
+       
+        
+        if(stageBase.stage_count==1)
         g2d.drawString("스테이지:1",700, 20);
-        else if(StageBase.stage_count==2)
+        else if(stageBase.stage_count==2)
         	g2d.drawString("스테이지:2",700, 20);
-        else if(StageBase.stage_count==3)
+        else if(stageBase.stage_count==3)
         	g2d.drawString("스테이지:3",700, 20);
-        else if(StageBase.stage_count==4)
+        else if(stageBase.stage_count==4)
         	g2d.drawString("스테이지:4",700, 20);
-        else if(StageBase.stage_count==5)
+        else if(stageBase.stage_count==5)
         	g2d.drawString("스테이지:5",700, 20);
-        else if(StageBase.stage_count==99)
+        else if(stageBase.stage_count==99)
         	g2d.drawString("스테이지:99",700, 20);
-      
+        g2d.setColor(Color.green);
+        g2d.fillRect(this.x-1,this.y-40,hp,20);
         // If the rocket is landed.
         if(landed)
         {

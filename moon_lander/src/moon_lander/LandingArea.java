@@ -24,7 +24,7 @@ public class LandingArea {
      * Y coordinate of the landing area.
      */
     public int y;
-     
+    private int Stagelevel=1;
 
     /**
      * Image of landing area.
@@ -80,7 +80,7 @@ public class LandingArea {
           
            
             
-            landingAreaImgWidth = landingAreaImg.getWidth();
+            landingAreaImgWidth =  landingAreaImg.getWidth();
             landingAreaImgWidth2 = landingAreaImg2.getWidth();
             landingAreaImgWidth3 = landingAreaImg3.getWidth();
             landingAreaImgWidth4 = landingAreaImg4.getWidth();
@@ -97,17 +97,17 @@ public class LandingArea {
     public void Draw(Graphics2D g2d)
     {
     	
-    	if(StageBase.stage_count==1)
+    	if(StageBase.stage_count==Stagelevel)
         g2d.drawImage(landingAreaImg, x, y, null);
-    	else if(StageBase.stage_count==2)
+    	else if(StageBase.stage_count==Stagelevel+1)
     		 g2d.drawImage(landingAreaImg2, x, y, null);
-    	else if(StageBase.stage_count==3)
+    	else if(StageBase.stage_count==Stagelevel+2)
    		 g2d.drawImage(landingAreaImg3, x, y, null);
-    	else if(StageBase.stage_count==4)
+    	else if(StageBase.stage_count==Stagelevel+3)
       		 g2d.drawImage(landingAreaImg4, x, y, null);
-    	else if(StageBase.stage_count==5)
+    	else if(StageBase.stage_count==Stagelevel+4)
       		 g2d.drawImage(landingAreaImg5, x, y, null);
-    	else if(StageBase.stage_count==99)
+    	else if(StageBase.stage_count==Stagelevel+98)
      		 g2d.drawImage(landingAreaImg5, x, y, null);
     	
     }

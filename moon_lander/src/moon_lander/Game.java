@@ -27,7 +27,7 @@ public class Game {
      * The space rocket with which player will have to land.
      */
     public static PlayerRocket playerRocket;
-	 public static PlayerEnemy playerEnemy;
+	public static PlayerEnemy playerEnemy;
     
     /**
      * Landing area on which rocket will have to land.
@@ -52,11 +52,12 @@ public class Game {
                 LoadContent();
                 
                 Framework.gameState = Framework.GameState.PLAYING;
+                
             }
         };
         threadForInitGame.start();
     }
-    
+   
 
    /**
      * Set variables and objects for the game.
@@ -109,6 +110,7 @@ public class Game {
         obstacle2.ResetObstacle();
         movingobstacle.ResetObstacle();
         movingobstacle2.ResetObstacle2();
+        
     }
     public static boolean Mode = false;
     
@@ -181,7 +183,7 @@ public class Game {
                     // Here we check if the rocket speed isn't too high.
                     if(playerRocket.speedY <= playerRocket.topLandingSpeed) {
                         playerRocket.landed = true;
-     
+      
                     }
                     else
                         playerRocket.crashed = true;
@@ -243,21 +245,33 @@ public class Game {
         Rectangle rocketRectangle = new Rectangle(playerRocket.x,playerRocket.y,playerRocket.rocketImg.getWidth(),playerRocket.rocketImg.getHeight());
         Rectangle obstacleRectangle = new Rectangle(obstacle.x,obstacle.y,obstacle.obstacleImg.getWidth(),obstacle.obstacleImg.getHeight());
         if(rocketRectangle.intersects(obstacleRectangle)) {
+        	playerRocket.hp -= 20;
+        	if(playerRocket.hp ==0)
+        	{
            playerRocket.crashed = true;
            Framework.gameState = Framework.GameState.GAMEOVER;
+        	}
         }
         Rectangle rocketRectangle2 = new Rectangle(playerRocket.x,playerRocket.y,playerRocket.rocketImg.getWidth(),playerRocket.rocketImg.getHeight());
         Rectangle obstacleRectangle2 = new Rectangle(obstacle2.x2,obstacle2.y2,obstacle2.obstacleImg2.getWidth(),obstacle2.obstacleImg2.getHeight());
         if(rocketRectangle2.intersects(obstacleRectangle2)) {
+        	playerRocket.hp -= 20;
+        	if(playerRocket.hp ==0)
+        	{
            playerRocket.crashed = true;
            Framework.gameState = Framework.GameState.GAMEOVER;
+        	}
         }
        
         Rectangle movingobstacleRectangle = new Rectangle(movingobstacle.x,movingobstacle.y,movingobstacle.movingobstacleImg.getWidth(),movingobstacle.movingobstacleImg.getHeight());
         
         if(rocketRectangle.intersects(movingobstacleRectangle)) {
+        	playerRocket.hp -= 20;
+        	if(playerRocket.hp ==0)
+        	{
            playerRocket.crashed = true;
            Framework.gameState = Framework.GameState.GAMEOVER;
+        	}
     }
         
        
@@ -265,8 +279,12 @@ public class Game {
 Rectangle movingobstacleRectangle2 = new Rectangle(movingobstacle2.x2,movingobstacle2.y2,movingobstacle2.movingobstacle2Img.getWidth(),movingobstacle2.movingobstacle2Img.getHeight());
         
         if(rocketRectangle.intersects(movingobstacleRectangle2)) {
+        	playerRocket.hp -= 20;
+        	if(playerRocket.hp ==0)
+        	{
            playerRocket.crashed = true;
            Framework.gameState = Framework.GameState.GAMEOVER;
+        	}
         }
         if(Mode==true)
         {
