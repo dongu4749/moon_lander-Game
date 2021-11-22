@@ -28,7 +28,7 @@ public class Game {
      */
     public static PlayerRocket playerRocket;
 	public static PlayerEnemy playerEnemy;
-    
+	public static boolean Mode = false;
     /**
      * Landing area on which rocket will have to land.
      */
@@ -86,10 +86,8 @@ public class Game {
     private void LoadContent()
     {
 	        Stage1 stage1 = new Stage1();
-			stage1.BackgroundImage();
-			
+			stage1.BackgroundImage();	
     }
-    
     
     /**
      * Restart game - reset some variables.
@@ -97,7 +95,6 @@ public class Game {
     public void RestartGame()
     {
 		/* playerEnemy.ResetPlayer(); */
-    	
     	
         playerRocket.ResetPlayer();
     	
@@ -112,8 +109,79 @@ public class Game {
         movingobstacle2.ResetObstacle2();
         
     }
-    public static boolean Mode = false;
     
+    public void landingAreaValue()
+    {
+    	int landingAreaArrayList[]= {landingArea.landingAreaImgWidth,landingArea.landingAreaImgWidth2,landingArea.landingAreaImgWidth3,landingArea.landingAreaImgWidth4,landingArea.landingAreaImgWidth5};
+        for(int i=0; i<5;i++)
+        {
+        	int AreaValue = landingAreaArrayList[i];
+        	for(int j=1;j<=6;j++)
+        	if(StageBase.stage_count==j) 
+        	{
+            if((playerRocket.getCoordinateX() > landingArea.x) && (playerRocket.getCoordinateX() < landingArea.x + landingAreaArrayList[i] - playerRocket.rocketImgWidth))
+            
+            {
+                // Here we check if the rocket speed isn't too high.
+                if(playerRocket.getSpeedY() <= playerRocket.getTopLandingSpeed()) {
+                    playerRocket.landed = true;
+
+                }
+                else
+                    playerRocket.crashed = true;
+            }
+            else
+                playerRocket.crashed = true;
+        	}
+        	
+        }
+    }
+    public void RectangleCrashed()
+    {
+    	playerRocket.hp -= 10;
+     	if(playerRocket.hp ==0)
+     	{
+        playerRocket.crashed = true;
+        Framework.gameState = Framework.GameState.GAMEOVER;
+     	}
+    }
+    public void RectangleOver()
+    {
+    	 Rectangle rocketRectangle = new Rectangle(playerRocket.getCoordinateX(),playerRocket.getCoordinateY(),playerRocket.rocketImg.getWidth(),playerRocket.rocketImg.getHeight());
+         Rectangle obstacleRectangle = new Rectangle(obstacle.x,obstacle.y,obstacle.obstacleImg.getWidth(),obstacle.obstacleImg.getHeight());
+         if(rocketRectangle.intersects(obstacleRectangle)) {
+        	 RectangleCrashed();
+         }
+         Rectangle rocketRectangle2 = new Rectangle(playerRocket.getCoordinateX(),playerRocket.getCoordinateY(),playerRocket.rocketImg.getWidth(),playerRocket.rocketImg.getHeight());
+         Rectangle obstacleRectangle2 = new Rectangle(obstacle2.x2,obstacle2.y2,obstacle2.obstacleImg2.getWidth(),obstacle2.obstacleImg2.getHeight());
+         if(rocketRectangle2.intersects(obstacleRectangle2)) {
+        	 RectangleCrashed();
+         }
+        
+         Rectangle movingobstacleRectangle = new Rectangle(movingobstacle.x,movingobstacle.y,movingobstacle.movingobstacleImg.getWidth(),movingobstacle.movingobstacleImg.getHeight());
+         
+         if(rocketRectangle.intersects(movingobstacleRectangle)) {
+        	 RectangleCrashed();
+     }
+         
+        
+         
+        Rectangle movingobstacleRectangle2 = new Rectangle(movingobstacle2.x2,movingobstacle2.y2,movingobstacle2.movingobstacle2Img.getWidth(),movingobstacle2.movingobstacle2Img.getHeight());
+         
+         if(rocketRectangle.intersects(movingobstacleRectangle2)) {
+        	 RectangleCrashed();
+         }
+         if(Mode==true)
+         {
+     Rectangle enemyRectangle = new Rectangle(playerEnemy.getCoordinateX(),playerEnemy.getCoordinateY(),playerEnemy.enemyImg.getWidth(),playerEnemy.enemyImg.getHeight());
+         {
+         	 if(enemyRectangle.intersects(rocketRectangle)) {
+                  playerRocket.crashed = true;
+                  Framework.gameState = Framework.GameState.GAMEOVER;
+         }
+     }
+         }
+    }
     /**
      * Update game logic.
      * 
@@ -143,158 +211,9 @@ public class Game {
         if(playerRocket.getCoordinateY() + playerRocket.rocketImgHeight - 10 > landingArea.y)
         {
             // Here we check if the rocket is over landing area.
-        	if(StageBase.stage_count==1) 
-        	{
-            if((playerRocket.getCoordinateX() > landingArea.x) && (playerRocket.getCoordinateX() < landingArea.x + landingArea.landingAreaImgWidth - playerRocket.rocketImgWidth))
-            
-            {
-                // Here we check if the rocket speed isn't too high.
-                if(playerRocket.getSpeedY() <= playerRocket.getTopLandingSpeed()) {
-                    playerRocket.landed = true;
-
-                }
-                else
-                    playerRocket.crashed = true;
-            }
-            else
-                playerRocket.crashed = true;
-        	}
-        	else if(StageBase.stage_count==2)
-        	{
-        		if((playerRocket.getCoordinateX() > landingArea.x) && (playerRocket.getCoordinateX() < landingArea.x + landingArea.landingAreaImgWidth2 - playerRocket.rocketImgWidth))
-                    
-                {
-                    // Here we check if the rocket speed isn't too high.
-                    if(playerRocket.getSpeedY() <= playerRocket.getTopLandingSpeed()) {
-                        playerRocket.landed = true;
-     
-                    }
-                    else
-                        playerRocket.crashed = true;
-                }
-                else
-                    playerRocket.crashed = true;
-        	}
-        	else if(StageBase.stage_count==3)
-        	{
-        		if((playerRocket.getCoordinateX() > landingArea.x) && (playerRocket.getCoordinateX() < landingArea.x + landingArea.landingAreaImgWidth3 - playerRocket.rocketImgWidth))
-                    
-                {
-                    // Here we check if the rocket speed isn't too high.
-                    if(playerRocket.getSpeedY() <= playerRocket.getTopLandingSpeed()) {
-                        playerRocket.landed = true;
-      
-                    }
-                    else
-                        playerRocket.crashed = true;
-                }
-                else
-                    playerRocket.crashed = true;
-        	}
-        	else if(StageBase.stage_count==4)
-        	{
-        		if((playerRocket.getCoordinateX() > landingArea.x) && (playerRocket.getCoordinateX() < landingArea.x + landingArea.landingAreaImgWidth4 - playerRocket.rocketImgWidth))
-                    
-                {
-                    // Here we check if the rocket speed isn't too high.
-                    if(playerRocket.getSpeedY() <= playerRocket.getTopLandingSpeed()) {
-                        playerRocket.landed = true;
-
-                    }
-                    else
-                        playerRocket.crashed = true;
-                }
-                else
-                    playerRocket.crashed = true;
-        	}
-        	else if(StageBase.stage_count==5)
-        	{
-        		if((playerRocket.getCoordinateX() > landingArea.x) && (playerRocket.getCoordinateX() < landingArea.x + landingArea.landingAreaImgWidth5 - playerRocket.rocketImgWidth))
-                    
-                {
-                    // Here we check if the rocket speed isn't too high.
-                    if(playerRocket.getSpeedY() <= playerRocket.getTopLandingSpeed()) {
-                        playerRocket.landed = true;
-   	
-     
-                    }
-                    else
-                        playerRocket.crashed = true;
-                }
-                else
-                    playerRocket.crashed = true;
-        	}
-        	else if(StageBase.stage_count==99)
-        	{
-        		if((playerRocket.getCoordinateX() > landingArea.x) && (playerRocket.getCoordinateX() < landingArea.x + landingArea.landingAreaImgWidth5 - playerRocket.rocketImgWidth))
-                    
-                {
-                    // Here we check if the rocket speed isn't too high.
-                    if(playerRocket.getSpeedY() <= playerRocket.getTopLandingSpeed()) {
-                        playerRocket.landed = true;	
-     
-                    }
-                    else
-                        playerRocket.crashed = true;
-                }
-                else
-                    playerRocket.crashed = true;
-        	}
+        	landingAreaValue();
             Framework.gameState = Framework.GameState.GAMEOVER;
         }
-        Rectangle rocketRectangle = new Rectangle(playerRocket.getCoordinateX(),playerRocket.getCoordinateY(),playerRocket.rocketImg.getWidth(),playerRocket.rocketImg.getHeight());
-        Rectangle obstacleRectangle = new Rectangle(obstacle.x,obstacle.y,obstacle.obstacleImg.getWidth(),obstacle.obstacleImg.getHeight());
-        if(rocketRectangle.intersects(obstacleRectangle)) {
-        	playerRocket.hp -= 20;
-        	if(playerRocket.hp ==0)
-        	{
-           playerRocket.crashed = true;
-           Framework.gameState = Framework.GameState.GAMEOVER;
-        	}
-        }
-        Rectangle rocketRectangle2 = new Rectangle(playerRocket.getCoordinateX(),playerRocket.getCoordinateY(),playerRocket.rocketImg.getWidth(),playerRocket.rocketImg.getHeight());
-        Rectangle obstacleRectangle2 = new Rectangle(obstacle2.x2,obstacle2.y2,obstacle2.obstacleImg2.getWidth(),obstacle2.obstacleImg2.getHeight());
-        if(rocketRectangle2.intersects(obstacleRectangle2)) {
-        	playerRocket.hp -= 20;
-        	if(playerRocket.hp ==0)
-        	{
-           playerRocket.crashed = true;
-           Framework.gameState = Framework.GameState.GAMEOVER;
-        	}
-        }
-       
-        Rectangle movingobstacleRectangle = new Rectangle(movingobstacle.x,movingobstacle.y,movingobstacle.movingobstacleImg.getWidth(),movingobstacle.movingobstacleImg.getHeight());
-        
-        if(rocketRectangle.intersects(movingobstacleRectangle)) {
-        	playerRocket.hp -= 20;
-        	if(playerRocket.hp ==0)
-        	{
-           playerRocket.crashed = true;
-           Framework.gameState = Framework.GameState.GAMEOVER;
-        	}
-    }
-        
-       
-        
-Rectangle movingobstacleRectangle2 = new Rectangle(movingobstacle2.x2,movingobstacle2.y2,movingobstacle2.movingobstacle2Img.getWidth(),movingobstacle2.movingobstacle2Img.getHeight());
-        
-        if(rocketRectangle.intersects(movingobstacleRectangle2)) {
-        	playerRocket.hp -= 20;
-        	if(playerRocket.hp ==0)
-        	{
-           playerRocket.crashed = true;
-           Framework.gameState = Framework.GameState.GAMEOVER;
-        	}
-        }
-        if(Mode==true)
-        {
-    Rectangle enemyRectangle = new Rectangle(playerEnemy.getCoordinateX(),playerEnemy.getCoordinateY(),playerEnemy.enemyImg.getWidth(),playerEnemy.enemyImg.getHeight());
-        {
-        	 if(enemyRectangle.intersects(rocketRectangle)) {
-                 playerRocket.crashed = true;
-                 Framework.gameState = Framework.GameState.GAMEOVER;
-        }
-    }
-        }
+        RectangleOver();
     }
     }

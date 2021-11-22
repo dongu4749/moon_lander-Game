@@ -56,7 +56,7 @@ public class Framework extends Canvas {
 	
 	//한번 실행되었을 때 닉네임 설정한 유저 수
 	public static Integer Player_num = 0;
-
+    
     /**
      * Width of the frame.
      */
@@ -92,7 +92,7 @@ public class Framework extends Canvas {
     /**
      * Possible states of the game
      */
-    public static enum GameState{STARTING, VISUALIZING, GAME_CONTENT_LOADING, MAIN_MENU,PAUSE, OPTIONS, PLAYING, GAMEOVER,PLAYER_SELECT, DESTROYED,STATISTICS,HIDDEN_STAGE,PRODUCER_PAGE,HELP}
+    public static enum GameState{STARTING, VISUALIZING, GAME_CONTENT_LOADING, MAIN_MENU, OPTIONS, PLAYING, GAMEOVER,PLAYER_SELECT, DESTROYED,STATISTICS,HIDDEN_STAGE,PRODUCER_PAGE,HELP}
     /**
      * Current state of the game
      */
@@ -124,6 +124,57 @@ public class Framework extends Canvas {
     	add(ONE_button);
     	add(TWO_button);
     }
+    public void ButtonHidden()
+    {
+    	main_start.setVisible(false);
+        exit_button.setVisible(false);
+        producer_button.setVisible(false);
+        statistics_button.setVisible(false);
+        Help_button.setVisible(false);
+        gotoMain.setVisible(false);
+        Hidden_button.setVisible(false);
+        Music_start_button.setVisible(false);
+        Music_stop_button.setVisible(false);
+        ONE_button.setVisible(false);
+        TWO_button.setVisible(false);
+        Restart.setVisible(false);
+    }
+    public void Producer()
+    {
+    	gameState = GameState.PRODUCER_PAGE;
+    }
+    public void Restartgame()
+    {
+    	restartGame();
+    }
+    
+    public void Help()
+    {
+    	gameState = GameState.HELP;
+    }
+    public void mainMenu()
+    {
+    	StageBase.stage_count = 1;
+    	gameState = GameState.MAIN_MENU;
+    }
+    public void Playerselect()
+    {
+    	gameState = GameState.PLAYER_SELECT;
+    }
+	public void Hidden()
+	{
+    	StageBase.stage_count = 99;
+    	newGame();
+	}
+	public void SetMusicButton()
+	{
+		    Music_start_button.setBounds(700,30,Music_start_button.getWidth(),Music_start_button.getHeight());
+			Music_start_button.setContentAreaFilled(false);
+			Music_start_button.setBorderPainted(false);
+			Music_stop_button.setBounds(750,30,Music_start_button.getWidth(),Music_start_button.getHeight());
+			Music_stop_button.setContentAreaFilled(false);
+			Music_stop_button.setBorderPainted(false);
+	}
     private void Initialize()
     {
     	AddButton();
@@ -299,8 +350,6 @@ public class Framework extends Canvas {
         });
     	 
     }
-   
-    
     /**
      * Image for menu.
      */
@@ -314,7 +363,6 @@ public class Framework extends Canvas {
     private BufferedImage HelpImg;
     private BufferedImage Help_pageImg;
     private BufferedImage Hidden_buttonImg;
-    
     private BufferedImage ONE_buttonImg;
     private BufferedImage TWO_buttonImg;
     private BufferedImage PLAYER_SELECTPAGEImg;
@@ -326,13 +374,11 @@ public class Framework extends Canvas {
     JButton producer_button = new JButton(new ImageIcon(this.getClass().getResource("/resources/images/producer_button.png")));
     JButton Help_button = new JButton(new ImageIcon(this.getClass().getResource("/resources/images/Help_button.png")));
     JButton Hidden_button = new JButton(new ImageIcon(this.getClass().getResource("/resources/images/Hidden_button.png")));
-   
     JButton Music_start_button = new JButton(new ImageIcon(this.getClass().getResource("/resources/images/audio_start.png")));
     JButton Music_stop_button = new JButton(new ImageIcon(this.getClass().getResource("/resources/images/audio_stop.png")));
     JButton ONE_button = new JButton(new ImageIcon(this.getClass().getResource("/resources/images/1P_button.png")));
     JButton TWO_button = new JButton(new ImageIcon(this.getClass().getResource("/resources/images/2P_button.png")));
     JButton gotoMain = new JButton("go to Main Manu");
-    
     JButton Restart = new JButton("Restart");
     
     public Framework ()
@@ -394,14 +440,11 @@ public class Framework extends Canvas {
         	URL Hidden_buttonImgUrl = this.getClass().getResource("/resources/images/Hidden_button.png");
         	Hidden_buttonImg = ImageIO.read(Hidden_buttonImgUrl);
         	
-        	
-        	
         	URL Music_start_buttonImgUrl = this.getClass().getResource("/resources/images/audio_start.png");
         	MusicPauseImg = ImageIO.read(Music_start_buttonImgUrl);
             
         	URL Music_stop_buttonImgUrl = this.getClass().getResource("/resources/images/audio_stop.png");
         	MusicPause2Img = ImageIO.read(Music_stop_buttonImgUrl);
-        	
         	
         	URL ONE_buttonImgUrl = this.getClass().getResource("/resources/images/1P_button.png");
         	ONE_buttonImg = ImageIO.read(ONE_buttonImgUrl);
@@ -422,7 +465,6 @@ public class Framework extends Canvas {
         }
     }
     
-   
     /**
      * In specific intervals of time (GAME_UPDATE_PERIOD) the game/logic is updated and then the game is drawn on the screen.
      */
@@ -458,26 +500,13 @@ public class Framework extends Canvas {
                     
                     lastTime = System.nanoTime();
                     }
-                    
-                    
-                   
-                    main_start.setVisible(false);
-                    exit_button.setVisible(false);
-                    producer_button.setVisible(false);
-                    statistics_button.setVisible(false);
-                    Help_button.setVisible(false);
-                    gotoMain.setVisible(false);
-                    Hidden_button.setVisible(false);
-                    Music_start_button.setVisible(false);
-                    Music_stop_button.setVisible(false);
-                    ONE_button.setVisible(false);
-                    TWO_button.setVisible(false);
-                    Restart.setVisible(false);
-                    
+                    ButtonHidden();
                     num = 0;
                 break;
                 case GAMEOVER:
                 	gotoMain.setVisible(true);
+                	Music_start_button.setVisible(true);
+                    Music_stop_button.setVisible(true);
                 	if(game.playerRocket.landed==false)
                 	 Restart.setVisible(true);
                 	 if(StageBase.stage_count==6)
@@ -487,8 +516,6 @@ public class Framework extends Canvas {
                 			 Restart.setVisible(false);
                 		 }
                 	 }
-                	 Music_start_button.setVisible(true);
-                     Music_stop_button.setVisible(true);
                      num++;
                  	if(num == 1 && game.playerRocket.landed == true) {
                  		Player.Save_Score(StageBase.stage_count, StageBase.Score); 
@@ -505,51 +532,29 @@ public class Framework extends Canvas {
                 	new RankingViewer();
                     gameState = GameState.MAIN_MENU;
                 break;
-                case PAUSE:
+                
                 	
                 case HELP:
-                	main_start.setVisible(false);
-                    exit_button.setVisible(false);
-                    producer_button.setVisible(false);
-                    statistics_button.setVisible(false);
-                    Help_button.setVisible(false);
-                    gotoMain.setVisible(true);	
-                    Hidden_button.setVisible(false);
-                    Music_start_button.setVisible(false);
-                    Music_stop_button.setVisible(false);
-                    ONE_button.setVisible(false);
-                    TWO_button.setVisible(false);
-                    Restart.setVisible(false);
+                   ButtonHidden();
+                   gotoMain.setVisible(true);
                 	break;
                 case HIDDEN_STAGE:
                 	
                 case PRODUCER_PAGE:
-                	main_start.setVisible(false);
-                    exit_button.setVisible(false);
-                    producer_button.setVisible(false);
-                    statistics_button.setVisible(false);
-                    Help_button.setVisible(false);
-                    Hidden_button.setVisible(false);
-                    Music_start_button.setVisible(false);
-                    Music_stop_button.setVisible(false);
-                    ONE_button.setVisible(false);
-                    TWO_button.setVisible(false);
-                    Restart.setVisible(false);
+                	ButtonHidden();
+                    gotoMain.setVisible(true);
                     break;
                 
                 case MAIN_MENU:
+                	ButtonHidden();
                 	main_start.setVisible(true);
                 	exit_button.setVisible(true);
                 	producer_button.setVisible(true);
                 	Help_button.setVisible(true);
                 	statistics_button.setVisible(true);
-                	gotoMain.setVisible(false);
-                	Restart.setVisible(false);
                 	Hidden_button.setVisible(true);
                 	Music_start_button.setVisible(true);
                     Music_stop_button.setVisible(true);
-                    ONE_button.setVisible(false);
-                    TWO_button.setVisible(false);
                     //...
                 break;
                 case OPTIONS:
@@ -559,18 +564,13 @@ public class Framework extends Canvas {
                     //...
                 break;
                 case PLAYER_SELECT:
+                	ButtonHidden();
                 	ONE_button.setVisible(true);
                     TWO_button.setVisible(true);
-                  
-                    main_start.setVisible(false);
-                    exit_button.setVisible(false);
-                    producer_button.setVisible(false);
-                    statistics_button.setVisible(false);
-                    Help_button.setVisible(false);
-                    Hidden_button.setVisible(false);
-                    Restart.setVisible(false);
                     Music_start_button.setVisible(true);
                     Music_stop_button.setVisible(true);
+                    gotoMain.setVisible(true);
+                    
                 break;
                 case STARTING:
                     // Sets variables and objects.
@@ -620,41 +620,6 @@ public class Framework extends Canvas {
         }
     }
    
-    
-    public void Producer()
-    {
-    	gameState = GameState.PRODUCER_PAGE;
-    }
-    public void Restartgame()
-    {
-    	restartGame();
-    }
-    
-    public void Help()
-    {
-    	gameState = GameState.HELP;
-    }
-    public void mainMenu()
-    {
-    	StageBase.stage_count = 1;
-    	gameState = GameState.MAIN_MENU;
-    }
-    public void Playerselect()
-    {
-    	gameState = GameState.PLAYER_SELECT;
-    }
-	    public void Hidden()
-	    {
-    	StageBase.stage_count = 99;
-    	newGame();
-	    }
-    	
-    
-    
-   
-    
-    
-   
    
     /**
      * Draw the game to the screen. It is called through repaint() method in GameLoop() method.
@@ -665,6 +630,7 @@ public class Framework extends Canvas {
         switch (gameState)
         {
             case PLAYING:
+            	
             	if(StageBase.stage_count==2) {
             		game.playerRocket.setSpeedStopping(1.2);
     				Stage2 stage2 = new Stage2();
@@ -692,19 +658,12 @@ public class Framework extends Canvas {
             	}
             
                 StageBase.Draw(g2d, mousePosition());
-                Music_start_button.setBounds(700,30,Music_start_button.getWidth(),Music_start_button.getHeight());
-     			Music_start_button.setContentAreaFilled(false);
-     			Music_start_button.setBorderPainted(false);
-     			Music_stop_button.setBounds(750,30,Music_start_button.getWidth(),Music_start_button.getHeight());
-     			Music_stop_button.setContentAreaFilled(false);
-     			Music_stop_button.setBorderPainted(false);
+               
             break;
             case PRODUCER_PAGE:
             	g2d.drawImage(ProduerPageImg, 0, 0, frameWidth, frameHeight, null);
             	gotoMain.setVisible(true);
             break;
-            
-           
             
             case HELP:
             	g2d.drawImage(Help_pageImg, 0, 0, frameWidth, frameHeight, null);
@@ -718,14 +677,7 @@ public class Framework extends Canvas {
             	TWO_button.setBounds(frameWidth/2,frameHeight/2+150,TWO_button.getWidth(),TWO_button.getHeight());
             	TWO_button.setContentAreaFilled(false);
             	TWO_button.setBorderPainted(false);
-            	gotoMain.setVisible(true);
-            	Music_start_button.setBounds(700,30,Music_start_button.getWidth(),Music_start_button.getHeight());
-     			Music_start_button.setContentAreaFilled(false);
-     			Music_start_button.setBorderPainted(false);
-     			Music_stop_button.setBounds(750,30,Music_start_button.getWidth(),Music_start_button.getHeight());
-     			Music_stop_button.setContentAreaFilled(false);
-     			Music_stop_button.setBorderPainted(false);
-            	
+            	SetMusicButton();
             	break;
             case GAMEOVER:
             	StageBase.DrawGameOver(g2d, mousePosition(), gameTime,PauseTime);
@@ -737,15 +689,9 @@ public class Framework extends Canvas {
                 Restart.setContentAreaFilled(false);
                 Restart.setBorderPainted(false);
                 Restart.setForeground(Color.white);
-                Music_start_button.setBounds(700,30,Music_start_button.getWidth(),Music_start_button.getHeight());
-     			Music_start_button.setContentAreaFilled(false);
-     			Music_start_button.setBorderPainted(false);
-     			Music_stop_button.setBounds(750,30,Music_start_button.getWidth(),Music_start_button.getHeight());
-     			Music_stop_button.setContentAreaFilled(false);
-     			Music_stop_button.setBorderPainted(false);
+                SetMusicButton();
             break;
             case MAIN_MENU:
-            	
             	main_start.setBounds(frameWidth/2-300,frameHeight/2+150,main_start.getWidth(),main_start.getHeight());
      			main_start.setContentAreaFilled(false);
      			main_start.setBorderPainted(false);
@@ -764,12 +710,7 @@ public class Framework extends Canvas {
      			Hidden_button.setBounds(frameWidth/2+200,frameHeight/2+150,Hidden_button.getWidth(),Hidden_button.getHeight());
      			Hidden_button.setContentAreaFilled(false);
      			Hidden_button.setBorderPainted(false);
-     			Music_start_button.setBounds(700,30,Music_start_button.getWidth(),Music_start_button.getHeight());
-     			Music_start_button.setContentAreaFilled(false);
-     			Music_start_button.setBorderPainted(false);
-     			Music_stop_button.setBounds(750,30,Music_start_button.getWidth(),Music_start_button.getHeight());
-     			Music_stop_button.setContentAreaFilled(false);
-     			Music_stop_button.setBorderPainted(false);
+     			SetMusicButton();
      			
                 g2d.drawImage(moonLanderMenuImg, 0, 0, frameWidth, frameHeight, null);
                 g2d.setColor(Color.white);
