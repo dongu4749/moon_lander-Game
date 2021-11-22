@@ -18,7 +18,7 @@ import javax.swing.JFrame;
  * @author www.gametutorial.net
  */
 
-public class PlayerEnemy extends JFrame{
+public class PlayerEnemy extends JFrame implements GamePlayer{
     
     /**
      * We use this to generate a random number for starting x coordinate of the rocket.
@@ -148,7 +148,7 @@ public class PlayerEnemy extends JFrame{
        
     }
     
-    private void LoadContent()
+    public void LoadContent()
     {
         try
         {

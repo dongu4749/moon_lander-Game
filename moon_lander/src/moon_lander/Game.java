@@ -26,18 +26,19 @@ public class Game {
     /**
      * The space rocket with which player will have to land.
      */
-    public static PlayerRocket playerRocket;
-	public static PlayerEnemy playerEnemy;
+    public PlayerRocket playerRocket;
+	public PlayerEnemy playerEnemy;
 	public static boolean Mode = false;
     /**
      * Landing area on which rocket will have to land.
      */
-    public static LandingArea landingArea;
-    public static Obstacle obstacle;
-    public static Obstacle2 obstacle2;
-    public static MovingObstacle movingobstacle;
-    public static MovingObstacle2 movingobstacle2;
-    public Ranking ranking;
+    public LandingArea landingArea;
+    public Obstacle obstacle;
+    public Obstacle obstacle1;
+    public MovingObstacle movingobstacle;
+    public MovingObstacle movingobstacle1;
+    public RankingWriter ranking;
+    public Option option;
 
     public Game()
     {
@@ -66,7 +67,7 @@ public class Game {
     {
     	
     	playerRocket = new PlayerRocket();
-    	
+    	option = new Option();
     	if(Mode==true)
     	{
     	playerEnemy = new PlayerEnemy();
@@ -75,9 +76,9 @@ public class Game {
     	
     	landingArea  = new LandingArea();
         obstacle = new Obstacle();
-        obstacle2 = new Obstacle2();
+        obstacle1 = new Obstacle();
         movingobstacle = new MovingObstacle();
-        movingobstacle2 = new MovingObstacle2();
+        movingobstacle1 = new MovingObstacle();
     }
     
     /**
@@ -85,8 +86,8 @@ public class Game {
      */
     private void LoadContent()
     {
-	        Stage1 stage1 = new Stage1();
-			stage1.BackgroundImage();	
+	        StageBase stagebase = new StageBase();
+			stagebase.call_BackgroungImage();	
     }
     
     /**
@@ -104,9 +105,9 @@ public class Game {
     	}
     	
         obstacle.ResetObstacle();
-        obstacle2.ResetObstacle();
+        obstacle1.ResetObstacle();
         movingobstacle.ResetObstacle();
-        movingobstacle2.ResetObstacle2();
+        movingobstacle1.ResetObstacle();
         
     }
     
@@ -148,38 +149,39 @@ public class Game {
     public void RectangleOver()
     {
     	 Rectangle rocketRectangle = new Rectangle(playerRocket.getCoordinateX(),playerRocket.getCoordinateY(),playerRocket.rocketImg.getWidth(),playerRocket.rocketImg.getHeight());
-         Rectangle obstacleRectangle = new Rectangle(obstacle.x,obstacle.y,obstacle.obstacleImg.getWidth(),obstacle.obstacleImg.getHeight());
-         if(rocketRectangle.intersects(obstacleRectangle)) {
+         Rectangle obstacleRectangle = new Rectangle(obstacle.getCoordinateX(),obstacle.getCoordinateY(),obstacle.obstacleImg.getWidth(),obstacle.obstacleImg.getHeight());
+         if(rocketRectangle.intersects(obstacleRectangle)) 
+         {
         	 RectangleCrashed();
          }
          Rectangle rocketRectangle2 = new Rectangle(playerRocket.getCoordinateX(),playerRocket.getCoordinateY(),playerRocket.rocketImg.getWidth(),playerRocket.rocketImg.getHeight());
-         Rectangle obstacleRectangle2 = new Rectangle(obstacle2.x2,obstacle2.y2,obstacle2.obstacleImg2.getWidth(),obstacle2.obstacleImg2.getHeight());
-         if(rocketRectangle2.intersects(obstacleRectangle2)) {
+         Rectangle obstacleRectangle2 = new Rectangle(obstacle1.getCoordinateX(),obstacle1.getCoordinateY(),obstacle1.obstacleImg.getWidth(),obstacle1.obstacleImg.getHeight());
+         if(rocketRectangle2.intersects(obstacleRectangle2)) 
+         {
         	 RectangleCrashed();
          }
         
-         Rectangle movingobstacleRectangle = new Rectangle(movingobstacle.x,movingobstacle.y,movingobstacle.movingobstacleImg.getWidth(),movingobstacle.movingobstacleImg.getHeight());
-         
-         if(rocketRectangle.intersects(movingobstacleRectangle)) {
+         Rectangle movingobstacleRectangle = new Rectangle(movingobstacle.getCoordinateX(),movingobstacle.getCoordinateY(),movingobstacle.movingobstacleImg.getWidth(),movingobstacle.movingobstacleImg.getHeight());
+         Rectangle movingobstacleRectangle2 = new Rectangle(movingobstacle1.getCoordinateX(),movingobstacle1.getCoordinateY(),movingobstacle1.movingobstacleImg.getWidth(),movingobstacle.movingobstacleImg.getHeight());
+         if(rocketRectangle.intersects(movingobstacleRectangle)) 
+         {
         	 RectangleCrashed();
-     }
-         
+         }
         
-         
-        Rectangle movingobstacleRectangle2 = new Rectangle(movingobstacle2.x2,movingobstacle2.y2,movingobstacle2.movingobstacle2Img.getWidth(),movingobstacle2.movingobstacle2Img.getHeight());
-         
-         if(rocketRectangle.intersects(movingobstacleRectangle2)) {
+         if(rocketRectangle.intersects(movingobstacleRectangle2)) 
+         {
         	 RectangleCrashed();
          }
          if(Mode==true)
          {
      Rectangle enemyRectangle = new Rectangle(playerEnemy.getCoordinateX(),playerEnemy.getCoordinateY(),playerEnemy.enemyImg.getWidth(),playerEnemy.enemyImg.getHeight());
          {
-         	 if(enemyRectangle.intersects(rocketRectangle)) {
+         	 if(enemyRectangle.intersects(rocketRectangle)) 
+         	 {
                   playerRocket.crashed = true;
                   Framework.gameState = Framework.GameState.GAMEOVER;
+             }
          }
-     }
          }
     }
     /**
@@ -198,11 +200,11 @@ public class Game {
     	playerEnemy.Update();
     	}
     	movingobstacle.Update();
-        movingobstacle2.Update();
-        if(movingobstacle.x == 800 || movingobstacle2.x2 == 800)
+        movingobstacle1.Update();
+        if(movingobstacle.getCoordinateX()== 800 || movingobstacle1.getCoordinateX() == 800)
         {
-        	MovingObstacle.ResetObstacle();
-        	MovingObstacle2.ResetObstacle2();
+        	movingobstacle.ResetObstacle();
+        	movingobstacle1.ResetObstacle();
         }
         
         

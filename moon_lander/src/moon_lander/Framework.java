@@ -107,7 +107,7 @@ public class Framework extends Canvas {
     public static long lastTime;
     
     // The actual game
-    private static Game game;
+    public static Game game;
    
     private void AddButton()
     {
@@ -210,7 +210,7 @@ public class Framework extends Canvas {
           	@Override
           	public void mousePressed(MouseEvent e) {
           		Game.Mode = false;
-          		new Ranking();
+          		new RankingWriter();
           	}
           	@Override
           	public void mouseEntered(MouseEvent e) {
@@ -476,7 +476,7 @@ public class Framework extends Canvas {
         
         // This variables are used for calculating the time that defines for how long we should put threat to sleep to meet the GAME_FPS.
         long beginTime, timeTaken, timeLeft;
-        int num = 0;
+        boolean first_in = false;
         
         while(true)
         {
@@ -486,14 +486,14 @@ public class Framework extends Canvas {
             {
                 case PLAYING:
                     
-                    if(game.playerRocket.pause == false)
+                    if(Option.pause == false)
                     {
                      gameTime += System.nanoTime() - lastTime;
                      game.UpdateGame(gameTime, mousePosition());
                     
                      lastTime = System.nanoTime();
                     }
-                    else if(game.playerRocket.pause == true)
+                    else if(Option.pause == true)
                     {
                     PauseTime += System.nanoTime() - lastTime;
                     game.UpdateGame(gameTime, mousePosition());
@@ -501,7 +501,8 @@ public class Framework extends Canvas {
                     lastTime = System.nanoTime();
                     }
                     ButtonHidden();
-                    num = 0;
+                    
+                    first_in = true;
                 break;
                 case GAMEOVER:
                 	gotoMain.setVisible(true);
@@ -516,16 +517,16 @@ public class Framework extends Canvas {
                 			 Restart.setVisible(false);
                 		 }
                 	 }
-                     num++;
-                 	if(num == 1 && game.playerRocket.landed == true) {
-                 		Player.Save_Score(StageBase.stage_count, StageBase.Score); 
+                 	if(first_in == true && game.playerRocket.landed == true) {
+                 		RankingCalculation.Save_Score(StageBase.stage_count, StageBase.Score); 
                  		StageBase.stage_count++;
                  		// 5레벨에서 깨도 한번 ++되어서 ==6으로 바꿈.
                  		if(StageBase.stage_count == 6) {
-                 			Player.Add_Score();
-                 			Player.Cal_Ranking();
-                 			Ranking.Update_Ranking();
+                 			RankingCalculation.Add_Score();
+                 			RankingCalculation.Cal_Ranking();
+                 			RankingWriter.Update_Ranking();
                  		}
+                 	first_in = false;
                  	}
                 break;
                 case STATISTICS:
@@ -631,30 +632,23 @@ public class Framework extends Canvas {
         {
             case PLAYING:
             	
+            	StageBase stagebase = new StageBase();
+    			stagebase.call_BackgroungImage();
+            	
             	if(StageBase.stage_count==2) {
             		game.playerRocket.setSpeedStopping(1.2);
-    				Stage2 stage2 = new Stage2();
-    				stage2.BackgroundImage();
             	}
             	else if(StageBase.stage_count==3) {
             		game.playerRocket.setSpeedStopping(1.4);
-            		Stage3 stage3 = new Stage3();
-    				stage3.BackgroundImage();
             	}
             	else if(StageBase.stage_count==4) {
             		game.playerRocket.setSpeedStopping(1.6);
-            		Stage4 stage4 = new Stage4();
-    				stage4.BackgroundImage();
             	}
             	else if(StageBase.stage_count==5) {
             		game.playerRocket.setSpeedStopping(1.8);
-            		Stage5 stage5 = new Stage5();
-    				stage5.BackgroundImage();
             	}
             	else if(StageBase.stage_count==99) {
             		game.playerRocket.setSpeedStopping(7);
-            		Stage6 stage6 = new Stage6();
-    				stage6.BackgroundImage();
             	}
             
                 StageBase.Draw(g2d, mousePosition());
@@ -677,6 +671,7 @@ public class Framework extends Canvas {
             	TWO_button.setBounds(frameWidth/2,frameHeight/2+150,TWO_button.getWidth(),TWO_button.getHeight());
             	TWO_button.setContentAreaFilled(false);
             	TWO_button.setBorderPainted(false);
+            	gotoMain.setVisible(true);
             	SetMusicButton();
             	break;
             case GAMEOVER:
@@ -717,7 +712,7 @@ public class Framework extends Canvas {
                 g2d.drawString("Use w a d keys to controle the rocket.", frameWidth / 2 - 117, frameHeight / 2);
                 g2d.drawString("시작하기 버튼을 눌러 게임을 시작하세요..", frameWidth / 2 - 120, frameHeight / 2 + 30);
                 g2d.drawString("WWW.GAMETUTORIAL.NET", 7, frameHeight - 20);
-                g2d.drawString("Best Score:"+" "+ Player.Final_Score[0][1], Framework.frameWidth / 2 - 100, Framework.frameHeight / 3+20);
+                g2d.drawString("Best Score:"+" "+ RankingCalculation.Final_Score[0][1], Framework.frameWidth / 2 - 100, Framework.frameHeight / 3+20);
             break;
             case OPTIONS:
                 //...

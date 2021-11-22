@@ -12,7 +12,7 @@ import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-public class Ranking extends JFrame {
+public class RankingWriter extends JFrame {
 	
 	// 배열이 0부터 시작해서 편리성을 위해 -1부터 시작.
 
@@ -21,7 +21,7 @@ public class Ranking extends JFrame {
 
    TextField tf = new TextField();
 
-   public Ranking() {
+   public RankingWriter() {
 
       Container c = getContentPane();
 
@@ -36,7 +36,7 @@ public class Ranking extends JFrame {
       b3.setBounds(180, 80, 80, 30);
       
       // 닉네임 생성때마다 새로운 플레이어 객체?? 생성
-      new Player();
+      new RankingCalculation();
       
 
       b1.addActionListener(new ActionListener() {
@@ -49,7 +49,7 @@ public class Ranking extends JFrame {
              Framework.Player_num++;
         	 
         	 // 플레이어 이름을 플레이어 객체에 담기
-             Player.hm.put(Framework.Player_num, tf.getText());
+             RankingCalculation.hm.put(Framework.Player_num, tf.getText());
              setVisible(false);
              
              Framework.newGame();
@@ -90,8 +90,8 @@ public class Ranking extends JFrame {
     	   BufferedWriter out = new BufferedWriter(new FileWriter("Ranking.txt", true));
        	out.newLine();
        	for(int i=0 ; i<300 ; i++) {
-       		if(Player.Final_Score[i][1] != 0) {
-       			out.write(Player.hm.get(Player.Final_Score[i][0]) + "\t" + Player.Final_Score[i][1] + "\n");
+       		if(RankingCalculation.Final_Score[i][1] != 0) {
+       			out.write(RankingCalculation.hm.get(RankingCalculation.Final_Score[i][0]) + "\t" + RankingCalculation.Final_Score[i][1] + "\n");
        		}
        	}
           out.close();

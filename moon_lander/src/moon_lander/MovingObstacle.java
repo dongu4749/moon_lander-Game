@@ -12,9 +12,11 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
-public class MovingObstacle extends JFrame {
+public class MovingObstacle extends JFrame implements GameObstacle{
    
-      public static int x,y;
+      private int x;
+      
+      private int y;
       
        public BufferedImage movingobstacleImg;
        public BufferedImage movingobstacleImg2;
@@ -22,7 +24,7 @@ public class MovingObstacle extends JFrame {
        public BufferedImage movingobstacleImg4;
        public BufferedImage movingobstacleImg5;
       
-       public static Random random;
+       private static Random random;
        
        /**
         * x좌표상에서 로켓은 얼마나 빠르고 어느 방향으로 움직이는가?
@@ -31,11 +33,23 @@ public class MovingObstacle extends JFrame {
        /**
         * y좌표상에서 로켓은 얼마나 빠르고 어느 방향으로 움직이는가?
         */
-       public static int speedX3;
-       public static int speedX4;
+       
+       
       
       public static int movingobstacleImgWidth;
       public static int movingobstacleImgHeight;
+      
+      public int getCoordinateX() {
+    	  return x;
+      }
+      
+      public int getCoordinateY() {
+    	  return y;
+      }
+      
+      public void setSpeedX(int speedX) {
+    	  this.speedX=speedX;
+      }
      
       
       public MovingObstacle(){
@@ -51,13 +65,12 @@ public class MovingObstacle extends JFrame {
           
          random = new Random();
          ResetObstacle();
-         
-         speedX3 = 7;
-         speedX4 = 6;
+        
+         speedX=7;
           
        }
       
-      private void LoadContent()
+      public void LoadContent()
        {
            try
            {
@@ -83,7 +96,7 @@ public class MovingObstacle extends JFrame {
            }
        }
       
-      public static void ResetObstacle()
+      public void ResetObstacle()
        {
          x = Framework. frameWidth/2-300;
          y = random.nextInt(Framework.frameWidth-movingobstacleImgWidth-300)+200;
@@ -111,7 +124,7 @@ public class MovingObstacle extends JFrame {
       {
          
          while(x <=800) {
-              x += speedX3;
+              x += speedX;
               break;
          }
          

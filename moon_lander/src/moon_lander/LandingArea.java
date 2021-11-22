@@ -24,7 +24,7 @@ public class LandingArea {
      * Y coordinate of the landing area.
      */
     public int y;
-    private int Stagelevel=1;
+    
 
     /**
      * Image of landing area.
@@ -97,17 +97,17 @@ public class LandingArea {
     public void Draw(Graphics2D g2d)
     {
     	
-    	if(StageBase.stage_count==Stagelevel)
+    	if(StageBase.stage_count==1)
         g2d.drawImage(landingAreaImg, x, y, null);
-    	else if(StageBase.stage_count==Stagelevel+1)
+    	else if(StageBase.stage_count==2)
     		 g2d.drawImage(landingAreaImg2, x, y, null);
-    	else if(StageBase.stage_count==Stagelevel+2)
+    	else if(StageBase.stage_count==3)
    		 g2d.drawImage(landingAreaImg3, x, y, null);
-    	else if(StageBase.stage_count==Stagelevel+3)
+    	else if(StageBase.stage_count==4)
       		 g2d.drawImage(landingAreaImg4, x, y, null);
-    	else if(StageBase.stage_count==Stagelevel+4)
+    	else if(StageBase.stage_count==5)
       		 g2d.drawImage(landingAreaImg5, x, y, null);
-    	else if(StageBase.stage_count==Stagelevel+98)
+    	else if(StageBase.stage_count==99)
      		 g2d.drawImage(landingAreaImg5, x, y, null);
     	
     }

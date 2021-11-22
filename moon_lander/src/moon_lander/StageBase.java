@@ -5,11 +5,16 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.Random;
+import java.io.IOException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-public abstract class StageBase {
+public class StageBase {
 	
 	static BufferedImage backgroundImg;
     
@@ -19,32 +24,34 @@ public abstract class StageBase {
 	
     public static int stage_count = 1; //stage 구현 위해 추가
 	
-	public abstract void BackgroundImage();
-	
 	public static int Score = 15;
 	
-	private int Stagelevel=1;
+	
 	public static void Draw(Graphics2D g2d, Point mousePosition)
     {
         g2d.drawImage(backgroundImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
         
-        Game.landingArea.Draw(g2d);
+        Framework.game.landingArea.Draw(g2d);
         if(Game.Mode==true)
         {
-		Game.playerEnemy.Draw(g2d);
+        Framework.game.playerEnemy.Draw(g2d);
         }
-        Game.obstacle.Draw(g2d);
-        Game.obstacle2.Draw(g2d);
-        Game.movingobstacle.Draw(g2d);
-        Game.movingobstacle2.Draw(g2d);
-        Game.playerRocket.PlayerDraw(g2d);
+        Framework.game.obstacle.Draw(g2d);
+        
+        Framework.game.obstacle1.Draw(g2d);
+        
+        Framework.game.movingobstacle.Draw(g2d);
+        
+        Framework.game.movingobstacle1.Draw(g2d);
+        
+        Framework.game.playerRocket.Draw(g2d);
     }
 	
 	public static void DrawGameOver(Graphics2D g2d, Point mousePosition, long gameTime,long PauseTime)
     {
         Draw(g2d, mousePosition);
 
-        if(Game.playerRocket.landed && StageBase.stage_count!=6)
+        if(Framework.game.playerRocket.landed && StageBase.stage_count!=6)
         {
         	Score = (int)((gameTime-PauseTime) / Framework.secInNanosec);
             g2d.drawString("You have successfully landed!", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3);
@@ -62,5 +69,44 @@ public abstract class StageBase {
             g2d.drawString("Press Clicked restart game Button.", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3 + 70);
         }
     }
+	
+	private void BackgroundImage() {
+	      try
+	        {
+	         if(stage_count == 1) {
+	               URL backgroundImgUrl = this.getClass().getResource("/resources/images/background1.jpg");
+	               backgroundImg = ImageIO.read(backgroundImgUrl);
+	         }
+	         else if(stage_count == 2) {
+	            URL backgroundImgUrl = this.getClass().getResource("/resources/images/background2.jpg");
+	               backgroundImg = ImageIO.read(backgroundImgUrl);
+	         }
+	         else if(stage_count == 3) {
+	            URL backgroundImgUrl = this.getClass().getResource("/resources/images/background3.jpg");
+	               backgroundImg = ImageIO.read(backgroundImgUrl);
+	         }
+	         else if(stage_count == 4) {
+	            URL backgroundImgUrl = this.getClass().getResource("/resources/images/background4.jpg");
+	               backgroundImg = ImageIO.read(backgroundImgUrl);
+	         }
+	         else if(stage_count == 5) {
+	            URL backgroundImgUrl = this.getClass().getResource("/resources/images/background5.jpg");
+	               backgroundImg = ImageIO.read(backgroundImgUrl);
+	         }
+	         else if(stage_count == 6) {
+	            URL backgroundImgUrl = this.getClass().getResource("/resources/images/background6.jpg");
+	               backgroundImg = ImageIO.read(backgroundImgUrl);
+	         }
+	            URL redBorderImgUrl = this.getClass().getResource("/resources/images/red_border.png");
+	            redBorderImg = ImageIO.read(redBorderImgUrl);
+	        }
+	        catch (IOException ex) {
+	            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+	        }
+	      
+	   }
+	   public void call_BackgroungImage(){
+	      BackgroundImage();
+	   }
 
 }

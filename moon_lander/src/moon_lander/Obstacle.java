@@ -10,9 +10,11 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
-public class Obstacle extends JFrame{
+public class Obstacle extends JFrame implements GameObstacle{
    
-   public int x,y;
+   private int x;
+   
+   private int y;
    
    public BufferedImage obstacleImg;
    
@@ -20,6 +22,14 @@ public class Obstacle extends JFrame{
    
    public int obstacleImgWidth;
    public int obstacleImgHeight;
+   
+   public int getCoordinateX() {
+	   return x;
+   }
+   
+   public int getCoordinateY() {
+	   return y;
+   }
    
    public Obstacle(){
        Initialize();
@@ -38,7 +48,7 @@ public class Obstacle extends JFrame{
        
     }
    
-   private void LoadContent()
+   public void LoadContent()
     {
         try
         {

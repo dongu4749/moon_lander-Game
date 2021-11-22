@@ -60,30 +60,8 @@ public class RankingViewer extends JFrame {
 
       } catch (FileNotFoundException e) {
          e.printStackTrace();
-
       } catch (Exception e) {
          e.printStackTrace();
-
-      } finally {
-
-         try {
-            fis.close();
-         } catch (IOException e) {
-            e.printStackTrace();
-         }
-
-         try {
-            isr.close();
-         } catch (IOException e) {
-            e.printStackTrace();
-         }
-
-         try {
-            br.close();
-         } catch (IOException e) {
-            e.printStackTrace();
-         }
-
       }
 
       l1.setText(content);

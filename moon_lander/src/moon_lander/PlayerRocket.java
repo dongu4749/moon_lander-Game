@@ -18,7 +18,7 @@ import javax.swing.JFrame;
  * @author www.gametutorial.net
  */
 
-public class PlayerRocket extends JFrame{
+public class PlayerRocket extends JFrame implements GamePlayer{
     
     /**
      * We use this to generate a random number for starting x coordinate of the rocket.
@@ -114,6 +114,14 @@ public class PlayerRocket extends JFrame{
     	return speedY;
     }
     
+    public void setSpeedX(int speedX) {
+    	this.speedX=speedX;
+    }
+    
+    public void setSpeedY(int speedY) {
+    	this.speedY=speedY;
+    }
+    
     public int getTopLandingSpeed() {
     	return topLandingSpeed;
     }
@@ -140,7 +148,7 @@ public class PlayerRocket extends JFrame{
         topLandingSpeed = 5;
     }
     
-    private void LoadContent()
+    public void LoadContent()
     {
         try
         {
@@ -192,15 +200,15 @@ public class PlayerRocket extends JFrame{
         
         if(Canvas.keyboardKeyState(KeyEvent.VK_P))
         {
-        	pause =true;
-        	Gamepause();
+        	Option.pause =true;
+        	Framework.game.option.Gamepause();
         	
         }
         if(Canvas.keyboardKeyState(KeyEvent.VK_O))
         {
         	
-        	pause =false;
-        	Gamerestart();
+        	Option.pause =false;
+        	Framework.game.option.Gamerestart();
         }
     }
     
@@ -210,7 +218,7 @@ public class PlayerRocket extends JFrame{
      */
     public void Update()
     {
-    	if(pause != true)
+    	if(Option.pause != true)
     	{
         // Calculating speed for moving up or down.
         if(Canvas.keyboardKeyState(KeyEvent.VK_W))
@@ -231,15 +239,15 @@ public class PlayerRocket extends JFrame{
             speedX -= speedStopping;
         if(Canvas.keyboardKeyState(KeyEvent.VK_P))
         {
-        	pause =true;
-        	Gamepause();
+        	Option.pause =true;
+        	Framework.game.option.Gamepause();
         	
         }
     	}
         if(Canvas.keyboardKeyState(KeyEvent.VK_O))
         {
-        	pause =false;
-        	Gamerestart();
+        	Option.pause =false;
+        	Framework.game.option.Gamerestart();
         }
        
         // Moves the rocket.
@@ -248,52 +256,8 @@ public class PlayerRocket extends JFrame{
         
         
     }
-    int p1speedX=1,p1speedY=1;
-    int p2speedX=1, p2speedY=1;
-    public static boolean pause = false;
-    public void Pausestore()
-    {
-    	
-      	if(pause == true )
-      	{
-      		p1speedX=speedX;
-      		p1speedY=speedY;
-            
-      		p2speedX=Game.playerEnemy.getSpeedX();
-      		p2speedY=Game.playerEnemy.getSpeedY();
-            
-            
-      	}
-    }
-    public void Gamepause()
-    {
-    	
-    	speedX=0;
-        speedY=0;
-        Game.playerEnemy.setSpeedX(0);
-        Game.playerEnemy.setSpeedY(0);
-        MovingObstacle.speedX3=0;
-        MovingObstacle.speedX4=0;
-        MovingObstacle2.speedX1=0;
-        MovingObstacle2.speedX2=0; 
-        speedStopping=0;
-        Game.playerEnemy.setSpeedStopping(0);
-    }	
-    
-    public void Gamerestart()
-    {
-    	MovingObstacle.speedX3=7;
-        MovingObstacle.speedX4=6;
-    	MovingObstacle2.speedX1=7;
-        MovingObstacle2.speedX2=6;
-        speedX=p1speedX;
-        speedY=p1speedY;
-        speedStopping=1;
-        Game.playerEnemy.setSpeedX(p2speedX);
-        Game.playerEnemy.setSpeedY(p2speedY);
-        Game.playerEnemy.setSpeedStopping(1);
-    }
-    public void PlayerDraw(Graphics2D g2d)
+  
+    public void Draw(Graphics2D g2d)
     {
         g2d.setColor(Color.white);
         g2d.drawString("Rocket coordinates: " + x + " : " + y, 5, 15);
@@ -329,7 +293,7 @@ public class PlayerRocket extends JFrame{
         else
         {
             // If player hold down a W key we draw rocket fire.
-        	if(pause != true)
+        	if(Option.pause != true)
         	{
             if(Canvas.keyboardKeyState(KeyEvent.VK_W))
                 g2d.drawImage(rocketFireImg, x + 12, y + 66, null);
