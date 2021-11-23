@@ -24,7 +24,7 @@ public class MovingObstacle extends JFrame implements GameObstacle{
        public BufferedImage movingobstacleImg4;
        public BufferedImage movingobstacleImg5;
       
-       private static Random random;
+       private Random random;
        
        /**
         * x좌표상에서 로켓은 얼마나 빠르고 어느 방향으로 움직이는가?
@@ -66,7 +66,7 @@ public class MovingObstacle extends JFrame implements GameObstacle{
          random = new Random();
          ResetObstacle();
         
-         speedX=7;
+         speedX = random.nextInt(10)+5;
           
        }
       

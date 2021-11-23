@@ -201,9 +201,12 @@ public class Game {
     	}
     	movingobstacle.Update();
         movingobstacle1.Update();
-        if(movingobstacle.getCoordinateX()== 800 || movingobstacle1.getCoordinateX() == 800)
+        if(movingobstacle.getCoordinateX()>800)
         {
         	movingobstacle.ResetObstacle();
+        }
+        if(movingobstacle1.getCoordinateX()>800)
+        {
         	movingobstacle1.ResetObstacle();
         }
         
