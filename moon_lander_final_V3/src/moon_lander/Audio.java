@@ -12,7 +12,7 @@ public class Audio {
      private File audioFile;
      private AudioInputStream audioInputStream;
      private boolean isLoop;
-     private boolean playing = true;
+     private boolean isPlaying = true;
      private long clipTime;
      
      public Audio(String pathname,boolean isLoop)
@@ -41,7 +41,7 @@ public class Audio {
      }
      public boolean audioPlayingTrue()
      {
-       return playing = true;
+       return isPlaying = true;
      }
      public void stop()
      {
@@ -60,15 +60,15 @@ public class Audio {
     	 clip.start();
      }
      
-     public void Musicpause()
+     public void musicPause()
      {
-     	playing = false;
+     	isPlaying = false;
      	mute();
      }
      
-     public void MusicResume()
+     public void musicResume()
      {
-     	playing = true;
+     	isPlaying = true;
      	resume();
      }
      

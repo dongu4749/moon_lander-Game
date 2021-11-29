@@ -30,6 +30,10 @@ import javax.swing.RepaintManager;
 import javax.swing.SwingUtilities;
 
 import moon_lander.Framework.GameState;
+import player.PlayerRocket;
+import ranking.RankingCalculator;
+import ranking.RankingViewer;
+import ranking.RankingWriter;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -54,9 +58,7 @@ import javax.swing.JFrame;
 public class Framework extends Canvas {
     
 	
-	//한번 실행되었을 때 닉네임 설정한 유저 수
-	public static Integer Player_num = 0;
-    private ImageCreate image = new ImageCreate();
+	private ImageCreate image = new ImageCreate();
     /**
      * Width of the frame.
      */
@@ -87,7 +89,7 @@ public class Framework extends Canvas {
     /**
      * Possible states of the game
      */
-    public static enum GameState{STARTING, VISUALIZING, GAME_CONTENT_LOADING, MAIN_MENU, OPTIONS, PLAYING, GAMEOVER,PLAYER_SELECT,STATISTICS,PRODUCER_PAGE,HELP,CHARACTER_SELECT}
+    public static enum GameState{STARTING,GAME_START,VISUALIZING, GAME_CONTENT_LOADING, MAIN_MENU, OPTIONS, PLAYING, GAMEOVER,PLAYER_SELECT,STATISTICS,PRODUCER_PAGE,HELP,CHARACTER_SELECT}
     /**
      * Current state of the game
      */
@@ -102,28 +104,29 @@ public class Framework extends Canvas {
     
     // The actual game
     public static Game game;
-    private void AddButton()
+    private void addButton()
     {
-    	add(image.main_start);
-    	add(image.statistics_button);
-    	add(image.producer_button);
-    	add(image.Help_button);
-    	add(image.Hidden_button);
-    	add(image.gotoMain);
-    	add(image.gotoNextStage);
-    	add(image.Restart);
-    	add(image.Music_start_button);
-    	add(image.Music_stop_button);
-    	add(image.ONE_button);
-    	add(image.TWO_button);
-    	add(image.rocket1select);
-    	add(image.rocket2select);
-    	add(image.rocket3select);
+    	add(image.main_Start_Button);
+    	add(image.game_Start_Button);
+    	add(image.statistics_Button);
+    	add(image.producer_Button);
+    	add(image.help_Button);
+    	add(image.hidden_Button);
+    	add(image.goToMain_Button);
+    	add(image.goToNextStage_Button);
+    	add(image.restart_Button);
+    	add(image.music_Start_Button);
+    	add(image.music_Stop_Button);
+    	add(image.one_Button);
+    	add(image.two_Button);
+    	add(image.rocket1Select_Button);
+    	add(image.rocket2Select_Button);
+    	add(image.rocket3Select_Button);
     }
 	private void Initialize()
     {
-    	AddButton();
-    	image.rocket1select.addMouseListener(new MouseAdapter() {
+    	addButton();
+    	image.rocket1Select_Button.addMouseListener(new MouseAdapter() {
     		@Override
          	public void mousePressed(MouseEvent e) {
          		PlayerRocket.character_num = 1;
@@ -131,7 +134,7 @@ public class Framework extends Canvas {
          	}
          		
     	});
-    	image.rocket2select.addMouseListener(new MouseAdapter() {
+    	image.rocket2Select_Button.addMouseListener(new MouseAdapter() {
     		@Override
          	public void mousePressed(MouseEvent e) {
          		PlayerRocket.character_num = 2;
@@ -139,7 +142,7 @@ public class Framework extends Canvas {
          	}
          	
     	});
-    	image.rocket3select.addMouseListener(new MouseAdapter() {
+    	image.rocket3Select_Button.addMouseListener(new MouseAdapter() {
     		@Override
          	public void mousePressed(MouseEvent e) {
          		PlayerRocket.character_num = 3;
@@ -147,51 +150,58 @@ public class Framework extends Canvas {
          	}
          	
     	});
-    	image.statistics_button.addMouseListener(new MouseAdapter() {
+    	image.statistics_Button.addMouseListener(new MouseAdapter() {
    		 @Override
          	public void mousePressed(MouseEvent e) {
    		    gameState = GameState.STATISTICS;
          	}
          	
    	 	}); 
-    	image.main_start.addMouseListener(new MouseAdapter() {
+    	image.main_Start_Button.addMouseListener(new MouseAdapter() {
          	@Override
          	public void mousePressed(MouseEvent e) {
          		gameState = GameState.PLAYER_SELECT;
          	}
          	
          });
-    	image.ONE_button.addMouseListener(new MouseAdapter() {
+    	image.game_Start_Button.addMouseListener(new MouseAdapter() {
+         	@Override
+         	public void mousePressed(MouseEvent e) {
+         		newGame();
+         	}
+         	
+         });
+    	image.one_Button.addMouseListener(new MouseAdapter() {
           	@Override
           	public void mousePressed(MouseEvent e) {
-          		Game.Mode = false;
+          		Game.isMode = false;
           		gameState = GameState.CHARACTER_SELECT;
           	}
           	
           });
-    	 image.TWO_button.addMouseListener(new MouseAdapter() {
+    	 image.two_Button.addMouseListener(new MouseAdapter() {
           	@Override
           	public void mousePressed(MouseEvent e) {
-          	    Game.Mode=true;	
+          	    Game.isMode=true;	
           		newGame();
           	}
           	
           });
-    	 image.producer_button.addMouseListener(new MouseAdapter() {
+    	 image.producer_Button.addMouseListener(new MouseAdapter() {
           	@Override
           	public void mousePressed(MouseEvent e) {
           		gameState = GameState.PRODUCER_PAGE;
           	}
           	
           });
-    	 image.Help_button.addMouseListener(new MouseAdapter() {
+    	 image.help_Button.addMouseListener(new MouseAdapter() {
            	@Override
            	public void mousePressed(MouseEvent e) {
            		gameState = GameState.HELP;
            	}
            	
            });
-    	 image.Hidden_button.addMouseListener(new MouseAdapter() {
+    	 image.hidden_Button.addMouseListener(new MouseAdapter() {
             	@Override
             	public void mousePressed(MouseEvent e) {
             		StageBase.stage_count = 6;
@@ -199,7 +209,7 @@ public class Framework extends Canvas {
             	}
             	
             });
-    	 image.gotoMain.addMouseListener(new MouseAdapter() {
+    	 image.goToMain_Button.addMouseListener(new MouseAdapter() {
           	
           	@Override
           	public void mousePressed(MouseEvent e) {
@@ -207,33 +217,33 @@ public class Framework extends Canvas {
             	gameState = GameState.MAIN_MENU;
           	}
           });
-    	 image.gotoNextStage.addMouseListener(new MouseAdapter() {
+    	 image.goToNextStage_Button.addMouseListener(new MouseAdapter() {
            	
            	@Override
            	public void mousePressed(MouseEvent e) {
-           		if(game.playerRocket.landed==true && StageBase.stage_count!=6)
+           		if(game.playerRocket.isLanded==true && StageBase.stage_count!=6)
            		StageBase.stage_count++;
            		restartGame();
            	}
            });
-    	 image.Restart.addMouseListener(new MouseAdapter() {
+    	 image.restart_Button.addMouseListener(new MouseAdapter() {
            	
            	@Override
            	public void mousePressed(MouseEvent e) {
            		restartGame();
            	}
            });
-    	image.Music_start_button.addMouseListener(new MouseAdapter() {
+    	image.music_Start_Button.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mousePressed(MouseEvent e) {
-        		backgroundMusic.MusicResume();
+        		backgroundMusic.musicResume();
         	}
         	
         });
-    	image.Music_stop_button.addMouseListener(new MouseAdapter() {
+    	image.music_Stop_Button.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mousePressed(MouseEvent e) {
-        		backgroundMusic.Musicpause();
+        		backgroundMusic.musicPause();
         	}
         });  	 
     }
@@ -298,50 +308,50 @@ public class Framework extends Canvas {
             {
                 case PLAYING:
                     
-                    if(Option.pause == false)
+                    if(PauseOption.isPause == false)
                     {
                      gameTime += System.nanoTime() - lastTime;
                      game.UpdateGame(gameTime, mousePosition());
                     
                      lastTime = System.nanoTime();
                     }
-                    else if(Option.pause == true)
+                    else if(PauseOption.isPause == true)
                     {
                     pauseTime += System.nanoTime() - lastTime;
                     game.UpdateGame(gameTime, mousePosition());
                     
                     lastTime = System.nanoTime();
                     }
-                    image.ButtonHidden();
+                    image.buttonHidden();
                     
                     first_in = true;
                 break;
                 case GAMEOVER:
-                	if(game.playerRocket.landed==false)
+                	if(game.playerRocket.isLanded==false)
                 	{
-                		image.Restart.setVisible(true);
-                		image.gotoNextStage.setVisible(false);
+                		image.restart_Button.setVisible(true);
+                		image.goToNextStage_Button.setVisible(false);
                 	}
                 	 if(StageBase.stage_count==6)
                 	 {
-                		 if(game.playerRocket.landed==true)
+                		 if(game.playerRocket.isLanded==true)
                 		 {
-                			 image.Restart.setVisible(false);
+                			 image.restart_Button.setVisible(false);
                 		 }
                 	 }
-                 	if(first_in == true && game.playerRocket.landed == true) {
-                 		RankingCalculation.Save_Score(StageBase.stage_count, StageBase.Time_Score,PlayerRocket.hp); 
+                 	if(first_in == true && game.playerRocket.isLanded == true) {
+                 		RankingCalculator.save_Score(StageBase.stage_count, StageBase.time_Score,PlayerRocket.hp); 
                  		// 5레벨에서 깨도 한번 ++되어서 ==6으로 바꿈.
                  		if(StageBase.stage_count == 5) {
-                 			RankingCalculation.Add_Score();
-                 			RankingCalculation.Cal_Ranking();
-                 			RankingWriter.Update_Ranking();
+                 			RankingCalculator.add_Score();
+                 			RankingCalculator.calculation_Ranking();
+                 			RankingWriter.update_Ranking();
                  		}
                  	first_in = false;
                  	}
                 break;
                 case STATISTICS:
-                	image.ButtonHidden();
+                	image.buttonHidden();
                 	new RankingViewer();
                     gameState = GameState.MAIN_MENU;
                 break;
@@ -355,11 +365,14 @@ public class Framework extends Canvas {
                     gameState = GameState.MAIN_MENU;
                 break;
                 case PRODUCER_PAGE:
-                	image.gotoMain.setVisible(true);
+                	image.goToMain_Button.setVisible(true);
                 	break;
                 	
                 case HELP:
-                	image.gotoMain.setVisible(true);
+                	image.goToMain_Button.setVisible(true);
+                	break;
+                case GAME_START:
+                	
                 	break;
                 case VISUALIZING:
                     // On Ubuntu OS (when I tested on my old computer) this.getWidth() method doesn't return the correct value immediately (eg. for frame that should be 800px width, returns 0 than 790 and at last 798px). 
@@ -412,82 +425,93 @@ public class Framework extends Canvas {
             case PLAYING:
             	StageBase stagebase = new StageBase();
     			stagebase.call_BackgroungImage();
+    			int stage_level=1;
+    			g2d.drawString("스테이지:"+stage_level,700, 20);
     			
             	for(int i=2;i<=5;i++)
             	{
             		for(int j=2;j<=5;j++)
             			if(StageBase.stage_count==j)
             			{
+            				stage_level++;
+            				g2d.drawString("스테이지:"+stage_level,700, 20);
             				double speed=1.2;
             		        game.playerRocket.setSpeedStopping(speed);
             		        speed += 0.2;	
             			}
             	}
+            	            
             	if(StageBase.stage_count==6)
     				game.playerRocket.setSpeedStopping(3);
                 StageBase.Draw(g2d, mousePosition());
                
             break;
             case PRODUCER_PAGE:
-            	image.ButtonHidden();
-            	image.gotoMain.setVisible(true);
-            	g2d.drawImage(image.ProduerPageImg, 0, 0, frameWidth, frameHeight, null);
+            	image.buttonHidden();
+            	image.goToMain_Button.setVisible(true);
+            	g2d.drawImage(image.produerPageImg, 0, 0, frameWidth, frameHeight, null);
             	
             break;
-            
+            case GAME_START:
+            	image.buttonHidden();
+            	image.setGameStartButton();
+            	image.goToMain_Button.setVisible(true);
+            	image.game_Start_Button.setVisible(true);
+            	g2d.drawImage(image.startPageImg, 0, 0, frameWidth, frameHeight, null);
+            	break;
             case HELP:
-            	image.ButtonHidden();
-            	image.gotoMain.setVisible(true);
-            	g2d.drawImage(image.Help_pageImg, 0, 0, frameWidth, frameHeight, null);
+            	image.buttonHidden();
+            	image.goToMain_Button.setVisible(true);
+            	g2d.drawImage(image.helpPageImg, 0, 0, frameWidth, frameHeight, null);
             	
             	break;
             case PLAYER_SELECT:
-            	image.ButtonHidden();
-            	image.gotoMain.setVisible(true);
-            	image.ONE_button.setVisible(true);
-            	image.TWO_button.setVisible(true);
-            	image.Music_start_button.setVisible(true);
-            	image.Music_stop_button.setVisible(true);
-            	image.gotoMain.setVisible(true);
+            	image.buttonHidden();
+            	image.goToMain_Button.setVisible(true);
+            	image.one_Button.setVisible(true);
+            	image.two_Button.setVisible(true);
+            	image.music_Start_Button.setVisible(true);
+            	image.music_Stop_Button.setVisible(true);
+            	image.goToMain_Button.setVisible(true);
             	image.setMusicButton();
-            	image.SetPlayerButton();
-            	g2d.drawImage(image.PLAYER_SELECTPAGEImg, 0, 0, frameWidth, frameHeight, null);
+            	image.setPlayerButton();
+            	g2d.drawImage(image.playerSelectPageImg, 0, 0, frameWidth, frameHeight, null);
    
             	break;
             case CHARACTER_SELECT:
-            	image.ButtonHidden();
-            	image.rocket1select.setVisible(true);
-            	image.rocket2select.setVisible(true);
-            	image.rocket3select.setVisible(true);
-            	image.SetRocketButton();
-            	g2d.drawImage(image.Character_SELECTPAGEImg, 0, 0, frameWidth, frameHeight, null);
+            	image.buttonHidden();
+            	image.rocket1Select_Button.setVisible(true);
+            	image.rocket2Select_Button.setVisible(true);
+            	image.rocket3Select_Button.setVisible(true);
+            	image.setRocketButton();
+            	g2d.drawImage(image.characterSelectPageImg, 0, 0, frameWidth, frameHeight, null);
             	
             break;	
             case GAMEOVER:
-            	image.gotoMain.setVisible(true);
-            	if(game.playerRocket.landed == true)
-            	image.gotoNextStage.setVisible(true);
-            	image.Music_start_button.setVisible(true);
-            	image.Music_stop_button.setVisible(true);
-            	image.SetGameOverButton();
+            	image.goToMain_Button.setVisible(true);
+            	if(game.playerRocket.isLanded == true)
+            	image.goToNextStage_Button.setVisible(true);
+            	image.music_Start_Button.setVisible(true);
+            	image.music_Stop_Button.setVisible(true);
+            	image.setGameOverButton();
             	image.setMusicButton();
             	StageBase.DrawGameOver(g2d, mousePosition(), gameTime,pauseTime);
             	
             break;
             case MAIN_MENU:
-            	image.ButtonHidden();
-            	image.MainButtonVisible();
-            	image.SetMainButton();
+            	image.buttonHidden();
+            	image.mainButtonVisible();
+            	image.setMainButton();
             	image.setMusicButton();
                 g2d.drawImage(image.moonLanderMenuImg, 0, 0, frameWidth, frameHeight, null);
                 g2d.setColor(Color.green);
                 g2d.drawString("WWW.GAMETUTORIAL.NET", 7, frameHeight-120);
-                g2d.drawString("Best Score:"+" "+ RankingCalculation.Final_Score[0][1], 7, frameHeight - 140);
+                g2d.drawString("Best Score:"+" "+ RankingCalculator.final_Score[0][1], 7, frameHeight - 140);
                
             break;
 
             case GAME_CONTENT_LOADING:
-            	image.ButtonHidden();
+            	image.buttonHidden();
                 g2d.setColor(Color.white);
                 g2d.drawString("GAME is LOADING", frameWidth / 2 - 50, frameHeight / 2);
             break;

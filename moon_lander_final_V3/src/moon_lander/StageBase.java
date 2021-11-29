@@ -14,6 +14,8 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
+import player.PlayerRocket;
+
 public class StageBase {
 	
 	static BufferedImage backgroundImg;
@@ -24,7 +26,7 @@ public class StageBase {
 	
     public static int stage_count = 1; //stage 구현 위해 추가
 	
-	public static int Time_Score = 15;
+	public static int time_Score = 15;
 	
 	
 	public static void Draw(Graphics2D g2d, Point mousePosition)
@@ -32,19 +34,18 @@ public class StageBase {
         g2d.drawImage(backgroundImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
         
         Framework.game.landingArea.Draw(g2d);
-        if(Game.Mode==true)
+        Framework.game.obstacle.Draw(g2d);
+        Framework.game.obstacle1.Draw(g2d);
+        Framework.game.movingobstacle.Draw(g2d);
+        Framework.game.playerRocket.Draw(g2d);
+        Framework.game.Draw(g2d);
+        if(Game.isMode==true)
         {
         Framework.game.playerEnemy.Draw(g2d);
         }
-        Framework.game.obstacle.Draw(g2d);
-        
-        Framework.game.obstacle1.Draw(g2d);
-        
-        Framework.game.movingobstacle.Draw(g2d);
         if(stage_count>=2) {
         Framework.game.movingobstacle1.Draw(g2d);
-        }
-        Framework.game.playerRocket.Draw(g2d);
+        } 
         if(stage_count>=3) {
         Framework.game.shootingobstacle.Draw(g2d);
         }
@@ -59,9 +60,9 @@ public class StageBase {
     {
         Draw(g2d, mousePosition);
 
-        if(Framework.game.playerRocket.landed && StageBase.stage_count!=6)
+        if(Framework.game.playerRocket.isLanded && StageBase.stage_count!=6)
         {
-           Time_Score = (int)((gameTime-PauseTime) / Framework.secInNanosec);
+           time_Score = (int)((gameTime-PauseTime) / Framework.secInNanosec);
            if(stage_count==1) {
             g2d.drawString("달은 생명체가 살기에 부적합으로 판단되었습니다. 다음 행성으로 TAKE-OFF 합니다.", Framework.frameWidth / 2 - 200, Framework.frameHeight / 3);      
            }
@@ -80,7 +81,7 @@ public class StageBase {
            if(stage_count==5) {
                 g2d.drawString("해왕성에는 생명체가 살 수 있을까요?", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3);
                }
-           g2d.drawString("You have landed in " + Time_Score + " seconds and you have "+ PlayerRocket.hp + " HP", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3 + 20);
+           g2d.drawString("You have landed in " + time_Score + " seconds and you have "+ PlayerRocket.hp + " HP", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3 + 20);
            g2d.drawString("Press Clicked restart game Button.", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3 + 70);
         }
         else if(StageBase.stage_count==6)
@@ -95,7 +96,7 @@ public class StageBase {
         }
     }
 	
-	private void BackgroundImage() {
+	private void backGroundImage() {
 	      try
 	        {
 	         if(stage_count == 1) {
@@ -131,7 +132,7 @@ public class StageBase {
 	      
 	   }
 	   public void call_BackgroungImage(){
-	      BackgroundImage();
+	      backGroundImage();
 	   }
 
 }
