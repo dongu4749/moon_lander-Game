@@ -169,7 +169,7 @@ public class PlayerRocket extends JFrame implements GamePlayer{
         LoadContent();
         
         //이제 rocketImgWidth가 있으므로 시작 x 좌표를 설정합니다.
-        x = random.nextInt(Framework.frameWidth - rocketImgWidth);
+        x = random.nextInt(800 - rocketImgWidth);
         
         if(character_num==2) {
         	topLandingSpeed=9;
@@ -254,7 +254,6 @@ public class PlayerRocket extends JFrame implements GamePlayer{
     	if(character_num == 1)
     	{
     		hp=100;
-    		
     	}
     	else if(character_num == 2)
     	{
@@ -268,23 +267,14 @@ public class PlayerRocket extends JFrame implements GamePlayer{
     	}
         isLanded = false;
         isCrashed = false;
-        
-        x = random.nextInt(Framework.frameWidth - rocketImgWidth);
-        y = 10;
-        
+        x = random.nextInt(800 - rocketImgWidth);
+        y = 10;    
         speedX = 0;
         speedY = 0;
-        
-       
     }
-    
-    
-    
     /**
      * Here we move the rocket.
      */
-    
-  
     public void Draw(Graphics2D g2d)
     {
         g2d.setColor(Color.white);
@@ -302,12 +292,10 @@ public class PlayerRocket extends JFrame implements GamePlayer{
         else if(isCrashed)
         {
             g2d.drawImage(rocketCrashedImg, x, y + rocketImgHeight - rocketCrashedImg.getHeight(), null);
-            
         }
         // If the rocket is still in the space.
         else
-        {
-        	
+        {	
             // If player hold down a W key we draw rocket fire.   	
             g2d.drawImage(rocketImg, x, y, null);
         	

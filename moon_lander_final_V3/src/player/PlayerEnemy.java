@@ -151,7 +151,7 @@ public class PlayerEnemy extends JFrame implements GamePlayer {
         LoadContent();
         
         //이제 rocketImgWidth가 있으므로 시작 x 좌표를 설정합니다.
-        x = random.nextInt(Framework.frameWidth - enemyImgWidth);
+        x = random.nextInt(800 - enemyImgWidth);
     }
     
     
@@ -198,7 +198,7 @@ public class PlayerEnemy extends JFrame implements GamePlayer {
     {
         
         
-        x = random.nextInt(Framework.frameWidth - enemyImgWidth);
+        x = random.nextInt(800 - enemyImgWidth);
         y = 200;
         
         speedX = 0;

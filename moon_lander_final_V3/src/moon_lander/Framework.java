@@ -131,8 +131,10 @@ public class Framework extends Canvas {
          	public void mousePressed(MouseEvent e) {
          		PlayerRocket.character_num = 1;
          		new RankingWriter();
-         	}
-         		
+    		}	
+         	
+    		
+    			
     	});
     	image.rocket2Select_Button.addMouseListener(new MouseAdapter() {
     		@Override
@@ -483,6 +485,7 @@ public class Framework extends Canvas {
             	image.rocket1Select_Button.setVisible(true);
             	image.rocket2Select_Button.setVisible(true);
             	image.rocket3Select_Button.setVisible(true);
+            	image.goToMain_Button.setVisible(true);
             	image.setRocketButton();
             	g2d.drawImage(image.characterSelectPageImg, 0, 0, frameWidth, frameHeight, null);
             	

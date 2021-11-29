@@ -227,7 +227,10 @@ public class Game {
     	
     	if(isMode==true)
     	{
+    		playerRocket.hp=100;
     		playerEnemyUpdate();
+    		playerEnemy.ResetPlayer();
+    		
     	}
     	
         obstacle.resetObstacle();
@@ -277,30 +280,21 @@ public class Game {
     {
     	 Rectangle rocketRectangle = new Rectangle(playerRocket.getCoordinateX(),playerRocket.getCoordinateY(),playerRocket.rocketImg.getWidth(),playerRocket.rocketImg.getHeight());
          Rectangle obstacleRectangle = new Rectangle(obstacle.getCoordinateX(),obstacle.getCoordinateY(),obstacle.obstacleImg.getWidth(),obstacle.obstacleImg.getHeight());
-         if(rocketRectangle.intersects(obstacleRectangle)) 
-         {
-        	 rectangleCrashed();
-         }
          Rectangle rocketRectangle2 = new Rectangle(playerRocket.getCoordinateX(),playerRocket.getCoordinateY(),playerRocket.rocketImg.getWidth(),playerRocket.rocketImg.getHeight());
          Rectangle obstacleRectangle2 = new Rectangle(obstacle1.getCoordinateX(),obstacle1.getCoordinateY(),obstacle1.obstacleImg.getWidth(),obstacle1.obstacleImg.getHeight());
-         if(rocketRectangle2.intersects(obstacleRectangle2)) 
-         {
-        	 rectangleCrashed();
-         }
-        
          Rectangle movingobstacleRectangle = new Rectangle(movingobstacle.getCoordinateX(),movingobstacle.getCoordinateY(),movingobstacle.movingobstacleImg.getWidth(),movingobstacle.movingobstacleImg.getHeight());
          Rectangle movingobstacleRectangle2 = new Rectangle(movingobstacle1.getCoordinateX(),movingobstacle1.getCoordinateY(),movingobstacle1.movingobstacleImg.getWidth(),movingobstacle.movingobstacleImg.getHeight());
-         if(rocketRectangle.intersects(movingobstacleRectangle)) 
+         Rectangle shootingobstacleRectangle = new Rectangle(shootingobstacle.getCoordinateX(),shootingobstacle.getCoordinateY(),shootingobstacle.movingobstacleImgWidth,shootingobstacle.movingobstacleImgHeight);
+         if(rocketRectangle.intersects(obstacleRectangle)||rocketRectangle2.intersects(obstacleRectangle2)||rocketRectangle.intersects(movingobstacleRectangle)) 
          {
         	 rectangleCrashed();
-         }
+         }         
         if(StageBase.stage_count>=2) {
          if(rocketRectangle.intersects(movingobstacleRectangle2)) 
          {
         	 rectangleCrashed();
          }
-        }
-        Rectangle shootingobstacleRectangle = new Rectangle(shootingobstacle.getCoordinateX(),shootingobstacle.getCoordinateY(),shootingobstacle.movingobstacleImgWidth,shootingobstacle.movingobstacleImgHeight);
+        }  
         if(StageBase.stage_count>=3) {
         if(shootingobstacleRectangle.intersects(rocketRectangle)) {
            rectangleCrashed();
@@ -312,7 +306,7 @@ public class Game {
          {
          	 if(enemyRectangle.intersects(rocketRectangle)) 
          	 {
-         		playerRocket.hp -= 10;
+         		playerRocket.hp -= 20;
          	 }
          		if(playerRocket.hp ==0)
              	{

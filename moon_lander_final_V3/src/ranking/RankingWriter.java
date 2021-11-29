@@ -4,6 +4,7 @@ import java.awt.Container;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -13,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import moon_lander.Framework;
+import moon_lander.Framework.GameState;
 
 public class RankingWriter extends JFrame {
 	
@@ -20,7 +22,7 @@ public class RankingWriter extends JFrame {
 
    JButton login_Button = new JButton("등록");
    JButton exit_Button = new JButton("나가기");
-
+ 
    TextField textField = new TextField();
 //한번 실행되었을 때 닉네임 설정한 유저 수
 public static Integer Player_num = 0;
@@ -45,7 +47,7 @@ private int frameHeight = 1000;
       // 닉네임 생성때마다 새로운 플레이어 객체?? 생성
       new RankingCalculator();
       
-
+      
       login_Button.addActionListener(new ActionListener() {
 
          @Override
@@ -58,7 +60,7 @@ private int frameHeight = 1000;
         	 // 플레이어 이름을 플레이어 객체에 담기
              RankingCalculator.hm.put(RankingWriter.Player_num, textField.getText());
              setVisible(false);
-             Framework.gameState = Framework.GameState.GAME_START;
+             Framework.gameState=GameState.GAME_START;
              
         	 
 				/*
@@ -68,7 +70,9 @@ private int frameHeight = 1000;
 				 * System.exit(1); }
 				 */
          }
-      });
+         
+         }
+      );
 
       exit_Button.addActionListener(new ActionListener() {
 
