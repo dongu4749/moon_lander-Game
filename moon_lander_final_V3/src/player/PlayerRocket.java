@@ -83,11 +83,11 @@ public class PlayerRocket extends JFrame implements GamePlayer{
     /**
      * Image of the rocket when landed.
      */
-    private BufferedImage rocketLandedImg;
+    public BufferedImage rocketLandedImg;
     /**
      * Image of the rocket when crashed.
      */
-    private BufferedImage rocketCrashedImg;
+    public BufferedImage rocketCrashedImg;
     /**
      * Image of the rocket fire.
      */
@@ -284,22 +284,7 @@ public class PlayerRocket extends JFrame implements GamePlayer{
         g2d.setColor(Color.green);
         g2d.fillRect(30,30,hp,10);
         // If the rocket is landed.
-        if(isLanded)
-        {
-            g2d.drawImage(rocketLandedImg, x, y, null);
-        }
-        // If the rocket is crashed.
-        else if(isCrashed)
-        {
-            g2d.drawImage(rocketCrashedImg, x, y + rocketImgHeight - rocketCrashedImg.getHeight(), null);
-        }
-        // If the rocket is still in the space.
-        else
-        {	
-            // If player hold down a W key we draw rocket fire.   	
-            g2d.drawImage(rocketImg, x, y, null);
-        	
-        }
+        
     }
     
 }

@@ -112,10 +112,26 @@ public class Game {
      */
     public void Draw(Graphics2D g2d)
     {
-      if(playerRocket.isLanded == false && playerRocket.isCrashed == false)	
-      {
+      
+      
+    	  if(playerRocket.isLanded)
+          {
+              g2d.drawImage(playerRocket.rocketLandedImg, playerRocket.getCoordinateX(), playerRocket.getCoordinateY(), null);
+          }
+          // If the rocket is crashed.
+          else if(playerRocket.isCrashed)
+          {
+              g2d.drawImage(playerRocket.rocketCrashedImg, playerRocket.getCoordinateX(), playerRocket.getCoordinateY() + playerRocket.rocketImgHeight - playerRocket.rocketCrashedImg.getHeight(), null);
+          }
+          // If the rocket is still in the space.
+          else
+          {	
+              // If player hold down a W key we draw rocket fire.   	
+              g2d.drawImage(playerRocket.rocketImg, playerRocket.getCoordinateX(), playerRocket.getCoordinateY(), null);
+          	
+          }
     	  if(PauseOption.isPause != true)
-      	{
+      	  {
           if(Canvas.keyboardKeyState(KeyEvent.VK_W))
           {
           if(PlayerRocket.character_num == 1)
@@ -133,7 +149,7 @@ public class Game {
              g2d.drawImage(playerEnemy.enemyImg, playerEnemy.getCoordinateX(), playerEnemy.getCoordinateY(), null);
          }
       	}
-      }
+      
     }
     public void playerRocketUpdate()
     {

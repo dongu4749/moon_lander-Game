@@ -131,6 +131,8 @@ public class Framework extends Canvas {
          	public void mousePressed(MouseEvent e) {
          		PlayerRocket.character_num = 1;
          		new RankingWriter();
+         		if(RankingWriter.checkLogin == 2)
+         			gameState = GameState.GAME_START;
     		}	
          	
     		
@@ -141,6 +143,8 @@ public class Framework extends Canvas {
          	public void mousePressed(MouseEvent e) {
          		PlayerRocket.character_num = 2;
          		new RankingWriter();
+         		if(RankingWriter.checkLogin == 2)
+         			gameState = GameState.GAME_START;
          	}
          	
     	});
@@ -149,6 +153,8 @@ public class Framework extends Canvas {
          	public void mousePressed(MouseEvent e) {
          		PlayerRocket.character_num = 3;
          		new RankingWriter();
+         		if(RankingWriter.checkLogin == 2)
+         			gameState = GameState.GAME_START;
          	}
          	
     	});
@@ -216,6 +222,7 @@ public class Framework extends Canvas {
           	@Override
           	public void mousePressed(MouseEvent e) {
           		StageBase.stage_count = 1;
+          		RankingWriter.checkLogin =1;
             	gameState = GameState.MAIN_MENU;
           	}
           });
@@ -329,6 +336,7 @@ public class Framework extends Canvas {
                     first_in = true;
                 break;
                 case GAMEOVER:
+                	
                 	if(game.playerRocket.isLanded==false)
                 	{
                 		image.restart_Button.setVisible(true);

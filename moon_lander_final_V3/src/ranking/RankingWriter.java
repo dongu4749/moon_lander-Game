@@ -28,6 +28,7 @@ public class RankingWriter extends JFrame {
 public static Integer Player_num = 0;
 private int frameWidth = 800;
 private int frameHeight = 1000;
+public static  int checkLogin = 1;
 
 
    public RankingWriter() {
@@ -60,7 +61,7 @@ private int frameHeight = 1000;
         	 // 플레이어 이름을 플레이어 객체에 담기
              RankingCalculator.hm.put(RankingWriter.Player_num, textField.getText());
              setVisible(false);
-             Framework.gameState=GameState.GAME_START;
+             checkLogin = 2;
              
         	 
 				/*
