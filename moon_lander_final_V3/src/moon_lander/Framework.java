@@ -87,7 +87,7 @@ public class Framework extends Canvas {
     private final long GAME_UPDATE_PERIOD = secInNanosec / GAME_FPS;
     
     /**
-     * Possible states of the game
+     * Possible states of the game	
      */
     public static enum GameState{STARTING,GAME_START,VISUALIZING, GAME_CONTENT_LOADING, MAIN_MENU, OPTIONS, PLAYING, GAMEOVER,PLAYER_SELECT,STATISTICS,PRODUCER_PAGE,HELP,CHARACTER_SELECT}
     /**
@@ -129,14 +129,13 @@ public class Framework extends Canvas {
     	image.rocket1Select_Button.addMouseListener(new MouseAdapter() {
     		@Override
          	public void mousePressed(MouseEvent e) {
+    			
          		PlayerRocket.character_num = 1;
+         		if(RankingWriter.checkLogin == 1)
          		new RankingWriter();
          		if(RankingWriter.checkLogin == 2)
          			gameState = GameState.GAME_START;
-    		}	
-         	
-    		
-    			
+    		}				
     	});
     	image.rocket2Select_Button.addMouseListener(new MouseAdapter() {
     		@Override
@@ -184,8 +183,7 @@ public class Framework extends Canvas {
           	public void mousePressed(MouseEvent e) {
           		Game.isMode = false;
           		gameState = GameState.CHARACTER_SELECT;
-          	}
-          	
+          	}	
           });
     	 image.two_Button.addMouseListener(new MouseAdapter() {
           	@Override

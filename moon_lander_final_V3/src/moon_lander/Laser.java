@@ -1,4 +1,4 @@
-package obstacle;
+package moon_lander;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -10,11 +10,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-
-import moon_lander.Canvas;
-import moon_lander.Framework;
-import moon_lander.PauseOption;
-import moon_lander.StageBase;
 
 public class Laser extends JFrame{
    

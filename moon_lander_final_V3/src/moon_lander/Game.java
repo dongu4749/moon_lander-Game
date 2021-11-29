@@ -13,10 +13,6 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
-import obstacle.Laser;
-import obstacle.MovingObstacle;
-import obstacle.Obstacle;
-import obstacle.ShootingObstacle;
 import player.PlayerEnemy;
 import player.PlayerRocket;
 import ranking.RankingWriter;

@@ -1,4 +1,4 @@
-package obstacle;
+package moon_lander;
 
 import java.awt.Graphics2D;
 

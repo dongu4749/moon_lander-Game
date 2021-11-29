@@ -1,4 +1,4 @@
-package obstacle;
+package moon_lander;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
-import moon_lander.Framework;
 import player.PlayerRocket;
 
 public class Obstacle extends JFrame implements GameObstacle{

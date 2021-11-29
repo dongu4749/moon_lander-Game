@@ -1,4 +1,4 @@
-package obstacle;
+package moon_lander;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -12,8 +12,6 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
-import moon_lander.Framework;
-import moon_lander.StageBase;
 import player.PlayerRocket;
 
 public class MovingObstacle extends JFrame implements GameObstacle{
