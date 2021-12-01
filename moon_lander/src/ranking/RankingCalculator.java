@@ -14,10 +14,10 @@ public class RankingCalculator {
 	}
 	
 	public static void save_Score(int stage_count, int Time_Score, int HP_Score) {
-	      
-	      score[stage_count-1] = Time_Score*10 + HP_Score;
-	      
-	   }
+        
+        score[stage_count-1] = Time_Score*10 + (200-HP_Score);
+        
+     }
 
 	public static void add_Score() {
 		total_Score[RankingWriter.Player_num][0] = RankingWriter.Player_num;

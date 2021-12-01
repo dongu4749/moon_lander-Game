@@ -22,12 +22,12 @@ public class Window extends JFrame{
     {
         // Sets the title for this frame.
         this.setTitle("Moon Lander");
-        
-        
-        // Sets size of the frame.
-        if(false) // Full screen mode
-        {
-            // Disables decorations for this frame.
+	        
+	        
+	        // Sets size of the frame.
+	        if(false) // Full screen mode
+	        {
+	            // Disables decorations for this frame.
             this.setUndecorated(true);
             // Puts the frame to full screen.
             this.setExtendedState(this.MAXIMIZED_BOTH);
