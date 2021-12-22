@@ -177,7 +177,11 @@ public class Game {
         {
         	PauseOption.isPause =false;
         	option.gameRestart();
-        }       
+        }
+        if(Canvas.keyboardKeyState(KeyEvent.VK_E))
+        {
+        	
+        }
         // Moves the rocket.
         playerRocket.moveRocket();        
     }

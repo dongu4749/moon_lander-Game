@@ -48,7 +48,7 @@ public class PlayerRocket extends JFrame implements GamePlayer{
      */
     public boolean isLanded;
     
-    
+    private boolean isTimed;
     /**
      * Has rocket crashed?
      */
@@ -158,6 +158,19 @@ public class PlayerRocket extends JFrame implements GamePlayer{
     public void playerRocketKeyEventRightNotPress()
     {
     	speedX -= speedStopping;
+    }
+    public void playerRocketKeyEventEPress()
+    {
+    	if(isTimed == false)
+    	{
+    		
+    	}
+    	
+    		
+    }
+    public void Skill()
+    {
+        	
     }
     public void moveRocket()
     {
