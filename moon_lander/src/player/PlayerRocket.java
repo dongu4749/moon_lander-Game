@@ -18,8 +18,8 @@ import moon_lander.Framework;
 import moon_lander.PauseOption;
 import moon_lander.StageBase;
 import ranking.RankingCalculator;
-
-/**
+import java.util.Timer;
+import java.util.TimerTask;/**
  * The space rocket with which player will have to land.
  * 
  * @author www.gametutorial.net
@@ -34,6 +34,9 @@ public class PlayerRocket extends JFrame implements GamePlayer{
      */
     private Random random;
     public static int hp = 100;
+
+    
+    private boolean cooltime = false;
     /**
      * X coordinate of the rocket.
      */
@@ -48,7 +51,7 @@ public class PlayerRocket extends JFrame implements GamePlayer{
      */
     public boolean isLanded;
     
-    private boolean isTimed;
+   
     /**
      * Has rocket crashed?
      */
@@ -161,16 +164,26 @@ public class PlayerRocket extends JFrame implements GamePlayer{
     }
     public void playerRocketKeyEventEPress()
     {
-    	if(isTimed == false)
-    	{
-    		
-    	}
-    	
-    		
+    	    skill();     		 
     }
-    public void Skill()
-    {
-        	
+    public void skill()
+    { 
+    	if(cooltime==false)
+    	{
+    		hp += 50;
+    		cooltime=true;
+    	}
+    	Timer skill_Time= new Timer();   	
+    	TimerTask cool_time= new TimerTask()
+    			{
+
+					@Override
+					public void run() {
+						// TODO 자동 생성된 메소드 스텁
+						cooltime = false;
+					}         				 
+    };
+        skill_Time.schedule(cool_time, 10000);
     }
     public void moveRocket()
     {

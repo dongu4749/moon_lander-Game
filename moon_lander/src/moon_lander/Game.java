@@ -180,7 +180,7 @@ public class Game {
         }
         if(Canvas.keyboardKeyState(KeyEvent.VK_E))
         {
-        	
+        	playerRocket.playerRocketKeyEventEPress();
         }
         // Moves the rocket.
         playerRocket.moveRocket();        
